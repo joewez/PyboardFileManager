@@ -28,8 +28,7 @@ Just unzip to a convenient location and run the PyboardFileManager.exe.
 - Select the com port for your device (if there is more than one)
 - The main window should appear with the files on the root of the device listed
 - If there was a problem and the files were not listed, click on the Refresh button
-  (If you still do not see any files on your device your version of AMPY may be incompatible.  See below.)
-
+  
 <b>HOW TO USE:</b>
 
 All the features are pretty self-explanatory, but here is just a short description of it's general use.
