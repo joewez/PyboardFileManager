@@ -1,0 +1,42 @@
+﻿// Create the following variables in application settings
+// To access the Settings page, select a project node in Solution Explorer, and then, 
+// on the Project menu, click Properties. When the Project Designer appears, click the Settings tab. 
+//
+// Name         Type    Scope   Value
+// WindowHeight int     user    200   
+// WindowWidth  int     user    200
+// WindowTop    int     user    0
+// WindowLeft   int     user    0
+//
+// and then add the following code
+
+using %Namespace%.Properties;
+
+private void Form1_Load(object sender, EventArgs e)
+{
+  // To add in your Main form Window Loading Method code
+  GetWindowValue();
+}
+
+private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+{
+      // You can place this code on File.Quit Menu method if you have one or here (window closing method)
+      SaveWindowValue();
+}
+
+private void SaveWindowValue()
+{
+      Settings.Default.WindowHeight = Height;
+      Settings.Default.WindowWidth = Width;
+      Settings.Default.WindowLeft = Left;
+      Settings.Default.WindowTop = Top;
+      Settings.Default.Save();
+}
+
+private void GetWindowValue()
+{
+      Width = Settings.Default.WindowWidth;
+      Height = Settings.Default.WindowHeight;
+      Top = Settings.Default.WindowTop < 0 ? 0 : Settings.Default.WindowTop;
+      Left = Settings.Default.WindowLeft < 0 ? 0 : Settings.Default.WindowLeft;
+}
