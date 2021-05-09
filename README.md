@@ -1,7 +1,7 @@
 # Pyboard File Manager
 Windows GUI for Pyboard.py Devices
 <p align="center">
-  <img src="https://github.com/joewez/PyboardFileManager/blob/master/pybfm.jpg" alt="Screenshot"/>
+  <img src="https://github.com/joewez/PyboardFileManager/blob/main/pybfm.jpg" alt="Screenshot"/>
 </p>
 
 A simple GUI wrapper that executes the Pyboard.py (https://github.com/micropython/micropython/blob/master/tools/pyboard.py) command to manipulate the files on an device running MicroPython.
