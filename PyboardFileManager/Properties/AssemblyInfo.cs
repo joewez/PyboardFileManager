@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Ampy File Manager")]
-[assembly: AssemblyDescription("A Windows GUI Front End For The AMPY File Utility")]
+[assembly: AssemblyTitle("Pyboard File Manager")]
+[assembly: AssemblyDescription("A Windows GUI Front End For The PYBOARD.PY Script")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Ampy File Manager")]
-[assembly: AssemblyCopyright("Copyright ©  2017-2020")]
+[assembly: AssemblyProduct("Pyboard File Manager")]
+[assembly: AssemblyCopyright("Copyright ©  2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

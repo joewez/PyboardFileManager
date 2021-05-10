@@ -9,8 +9,10 @@ namespace PyboardFileManager
 {
     public partial class TerminalForm : Form
     {
+        private string _comport = "COM3";
+        private int _baudrate = 115200;
         private string _command = string.Empty;
-        private bool _command_run = false;
+        private bool _command_has_run = false;
         private string _readBuffer = string.Empty;
         private int _bufferLimit = 16384;
         private int _bufferResetSize = 2048;
@@ -18,16 +20,16 @@ namespace PyboardFileManager
         public TerminalForm(string ComPort, int BaudRate, string Command)
         {
             InitializeComponent();
-            serialPort1.PortName = ComPort;
-            serialPort1.BaudRate = BaudRate;
+            _comport = ComPort;
+            _baudrate = BaudRate;
             _command = Command;
         }
 
         private void TerminalForm_Load(object sender, EventArgs e)
         {
             txtDisplay.Font = new Font(ConfigurationManager.AppSettings["TerminalFont"], Convert.ToSingle(ConfigurationManager.AppSettings["TerminalFontSize"]), FontStyle.Bold);
-            txtDisplay.BackColor = DecodeColor("TerminalBackColor");
-            txtDisplay.ForeColor = DecodeColor("TerminalForeColor");
+            txtDisplay.BackColor = Utils.DecodeColor("TerminalBackColor");
+            txtDisplay.ForeColor = Utils.DecodeColor("TerminalForeColor");
 
             GetWindowValue();
         }
@@ -35,20 +37,39 @@ namespace PyboardFileManager
         private void TerminalForm_Activated(object sender, EventArgs e)
         {
             if (!serialPort1.IsOpen)
+            {
+                serialPort1.PortName = _comport;
+                serialPort1.BaudRate = _baudrate;
+                serialPort1.DtrEnable = Utils.DecodeBoolean("TerminalDTREnable");
+                serialPort1.RtsEnable = Utils.DecodeBoolean("TerminalRTSEnable");
                 serialPort1.Open();
-            if (!_command_run)
+                SendCtrlC();
+            }
+            if (!_command_has_run)
                 timer1.Enabled = true;
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            timer1.Enabled = false;
-            if (!String.IsNullOrEmpty(_command) && serialPort1.IsOpen)
+            try
             {
-                serialPort1.Write(_command);
-                serialPort1.Write("\r");
+                timer1.Enabled = false;
+
+                if (!String.IsNullOrEmpty(_command))
+                {
+                    if (!serialPort1.IsOpen)
+                        serialPort1.Open();
+
+                    serialPort1.Write(_command);
+                    serialPort1.Write("\r");
+                }
+
+                _command_has_run = true;
             }
-            _command_run = true;
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
         }
 
         private void serialPort1_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
@@ -60,7 +81,7 @@ namespace PyboardFileManager
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "serialPort1_DataReceived() Error");
+                Debug.WriteLine(ex.Message);
             }
         }
 
@@ -77,23 +98,47 @@ namespace PyboardFileManager
 
         private void txtDisplay_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Up)
+            try
             {
-                byte[] b = { 27, 91, 65 };
-                serialPort1.Write(b, 0, 3);
+                if (e.KeyCode == Keys.Up)
+                {
+                    byte[] b = { 27, 91, 65 };
+                    serialPort1.Write(b, 0, 3);
+                }
+                else if (e.KeyCode == Keys.Down)
+                {
+                    byte[] b = { 27, 91, 66 };
+                    serialPort1.Write(b, 0, 3);
+                }
+                else if (e.KeyCode == Keys.Tab)
+                {
+                    serialPort1.Write("\t");
+                }
+                else if ((e.KeyCode == Keys.V && e.Control) || (e.KeyCode == Keys.Insert && e.Shift))
+                {
+                    serialPort1.Write(Clipboard.GetText());
+                }
             }
-            else if (e.KeyCode == Keys.Down)
+            catch (Exception ex)
             {
-                byte[] b = { 27, 91, 66 };
-                serialPort1.Write(b, 0, 3);
+                Debug.WriteLine(ex.Message);
             }
-            else if (e.KeyCode == Keys.Tab)
+        }
+
+        private void SendCtrlC()
+        {
+            try
             {
-                serialPort1.Write("\t");
+                if (serialPort1.IsOpen)
+                {
+                    char[] key = new char[1];
+                    key[0] = (char)3;
+                    serialPort1.Write(key, 0, 1);
+                }
             }
-            else if ((e.KeyCode == Keys.V && e.Control) || (e.KeyCode == Keys.Insert && e.Shift))
+            catch (Exception ex)
             {
-                serialPort1.Write(Clipboard.GetText());
+                Debug.WriteLine(ex.Message);
             }
         }
 
@@ -120,6 +165,8 @@ namespace PyboardFileManager
 
         public void DoUpdate(object sender, System.EventArgs e)
         {
+            Debug.WriteLine("DoUpdate() Invoked");
+
             try
             {
                 if (!String.IsNullOrEmpty(_readBuffer))
@@ -208,23 +255,6 @@ namespace PyboardFileManager
                 Debug.WriteLine("DoUpdate() Error:" + ex.Message);
             }
         
-        }
-
-        private Color DecodeColor(string ColorSettingName)
-        {
-            Color color = new Color();
-
-            string ColorSetting = ConfigurationManager.AppSettings[ColorSettingName];
-
-            if (ColorSetting.Contains(","))
-            {
-                string[] rgb = ColorSetting.Split(',');
-                color = Color.FromArgb(Convert.ToInt32(rgb[0]), Convert.ToInt32(rgb[1]), Convert.ToInt32(rgb[2]));
-            }
-            else
-                color = Color.FromName(ColorSetting);
-
-            return color;
         }
 
         private void GetWindowValue()

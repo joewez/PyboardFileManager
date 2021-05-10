@@ -86,12 +86,14 @@
     <Compile Include="SelectComForm.Designer.cs">
       <DependentUpon>SelectComForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Settings.cs" />
     <Compile Include="TerminalForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="TerminalForm.Designer.cs">
       <DependentUpon>TerminalForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Utils.cs" />
     <EmbeddedResource Include="HelpForm.resx">
       <DependentUpon>HelpForm.cs</DependentUpon>
     </EmbeddedResource>

@@ -98,7 +98,7 @@ namespace PyboardFileManager
             if (String.IsNullOrWhiteSpace(_EditableExtensions))
                 _EditableExtensions = "py,txt,html,js,css,json";
 
-            lstDirectory.BackColor = DecodeColor("ExplorerColor");
+            lstDirectory.BackColor = Utils.DecodeColor("ExplorerColor");
             lstDirectory.Font = new Font(ConfigurationManager.AppSettings["DirectoryFont"], Convert.ToSingle(ConfigurationManager.AppSettings["DirectoryFontSize"]), FontStyle.Regular);
 
             ConfigureForPython(scintilla1);
@@ -774,30 +774,30 @@ namespace PyboardFileManager
             scintilla.AutomaticFold = (AutomaticFold.Show | AutomaticFold.Click | AutomaticFold.Change);
 
             // Set the styles
-            scintilla.Styles[Style.Python.Default].ForeColor = DecodeColor("Python.Default.ForeColor");
-            scintilla.Styles[Style.Python.CommentLine].ForeColor = DecodeColor("Python.CommentLine.ForeColor");
-            scintilla.Styles[Style.Python.CommentLine].Italic = DecodeBoolean("Python.CommentLine.Italic");
-            scintilla.Styles[Style.Python.Number].ForeColor = DecodeColor("Python.Number.ForeColor");
-            scintilla.Styles[Style.Python.String].ForeColor = DecodeColor("Python.String.ForeColor");
-            scintilla.Styles[Style.Python.Character].ForeColor = DecodeColor("Python.Character.ForeColor");
-            scintilla.Styles[Style.Python.Word].ForeColor = DecodeColor("Python.Word.ForeColor");
-            scintilla.Styles[Style.Python.Word].Bold = DecodeBoolean("Python.Word.Bold");
-            scintilla.Styles[Style.Python.Triple].ForeColor = DecodeColor("Python.Triple.ForeColor");
-            scintilla.Styles[Style.Python.TripleDouble].ForeColor = DecodeColor("Python.TripleDouble.ForeColor");
-            scintilla.Styles[Style.Python.ClassName].ForeColor = DecodeColor("Python.ClassName.ForeColor");
-            scintilla.Styles[Style.Python.ClassName].Bold = DecodeBoolean("Python.ClassName.Bold");
-            scintilla.Styles[Style.Python.DefName].ForeColor = DecodeColor("Python.DefName.ForeColor");
-            scintilla.Styles[Style.Python.DefName].Bold = DecodeBoolean("Python.DefName.Bold");
-            scintilla.Styles[Style.Python.Operator].Bold = DecodeBoolean("Python.Operator.Bold");
-            scintilla.Styles[Style.Python.Identifier].ForeColor = DecodeColor("Python.Identifier.ForeColor");
-            scintilla.Styles[Style.Python.CommentBlock].ForeColor = DecodeColor("Python.CommentBlock.ForeColor");
-            scintilla.Styles[Style.Python.CommentBlock].Italic = DecodeBoolean("Python.CommentBlock.Italic");
-            scintilla.Styles[Style.Python.StringEol].ForeColor = DecodeColor("Python.StringEol.ForeColor");
-            scintilla.Styles[Style.Python.StringEol].BackColor = DecodeColor("Python.StringEol.BackColor");
-            scintilla.Styles[Style.Python.StringEol].Bold = DecodeBoolean("Python.StringEol.Bold");
-            scintilla.Styles[Style.Python.StringEol].FillLine = DecodeBoolean("Python.StringEol.FillLine");
-            scintilla.Styles[Style.Python.Word2].ForeColor = DecodeColor("Python.Word2.ForeColor");
-            scintilla.Styles[Style.Python.Decorator].ForeColor = DecodeColor("Python.Decorator.ForeColor");
+            scintilla.Styles[Style.Python.Default].ForeColor = Utils.DecodeColor("Python.Default.ForeColor");
+            scintilla.Styles[Style.Python.CommentLine].ForeColor = Utils.DecodeColor("Python.CommentLine.ForeColor");
+            scintilla.Styles[Style.Python.CommentLine].Italic = Utils.DecodeBoolean("Python.CommentLine.Italic");
+            scintilla.Styles[Style.Python.Number].ForeColor = Utils.DecodeColor("Python.Number.ForeColor");
+            scintilla.Styles[Style.Python.String].ForeColor = Utils.DecodeColor("Python.String.ForeColor");
+            scintilla.Styles[Style.Python.Character].ForeColor = Utils.DecodeColor("Python.Character.ForeColor");
+            scintilla.Styles[Style.Python.Word].ForeColor = Utils.DecodeColor("Python.Word.ForeColor");
+            scintilla.Styles[Style.Python.Word].Bold = Utils.DecodeBoolean("Python.Word.Bold");
+            scintilla.Styles[Style.Python.Triple].ForeColor = Utils.DecodeColor("Python.Triple.ForeColor");
+            scintilla.Styles[Style.Python.TripleDouble].ForeColor = Utils.DecodeColor("Python.TripleDouble.ForeColor");
+            scintilla.Styles[Style.Python.ClassName].ForeColor = Utils.DecodeColor("Python.ClassName.ForeColor");
+            scintilla.Styles[Style.Python.ClassName].Bold = Utils.DecodeBoolean("Python.ClassName.Bold");
+            scintilla.Styles[Style.Python.DefName].ForeColor = Utils.DecodeColor("Python.DefName.ForeColor");
+            scintilla.Styles[Style.Python.DefName].Bold = Utils.DecodeBoolean("Python.DefName.Bold");
+            scintilla.Styles[Style.Python.Operator].Bold = Utils.DecodeBoolean("Python.Operator.Bold");
+            scintilla.Styles[Style.Python.Identifier].ForeColor = Utils.DecodeColor("Python.Identifier.ForeColor");
+            scintilla.Styles[Style.Python.CommentBlock].ForeColor = Utils.DecodeColor("Python.CommentBlock.ForeColor");
+            scintilla.Styles[Style.Python.CommentBlock].Italic = Utils.DecodeBoolean("Python.CommentBlock.Italic");
+            scintilla.Styles[Style.Python.StringEol].ForeColor = Utils.DecodeColor("Python.StringEol.ForeColor");
+            scintilla.Styles[Style.Python.StringEol].BackColor = Utils.DecodeColor("Python.StringEol.BackColor");
+            scintilla.Styles[Style.Python.StringEol].Bold = Utils.DecodeBoolean("Python.StringEol.Bold");
+            scintilla.Styles[Style.Python.StringEol].FillLine = Utils.DecodeBoolean("Python.StringEol.FillLine");
+            scintilla.Styles[Style.Python.Word2].ForeColor = Utils.DecodeColor("Python.Word2.ForeColor");
+            scintilla.Styles[Style.Python.Decorator].ForeColor = Utils.DecodeColor("Python.Decorator.ForeColor");
 
             // Important for Python
             scintilla.ViewWhitespace = WhitespaceMode.VisibleAlways;
@@ -835,36 +835,6 @@ namespace PyboardFileManager
                 strTitle = stringBuilder.ToString();
             }
             return strTitle;
-        }
-
-        private Color DecodeColor(string ColorSettingName)
-        {
-            Color color = new Color();
-
-            string ColorSetting = ConfigurationManager.AppSettings[ColorSettingName];
-
-            if (ColorSetting.Contains(","))
-            {
-                string[] rgb = ColorSetting.Split(',');
-                color = Color.FromArgb(Convert.ToInt32(rgb[0]), Convert.ToInt32(rgb[1]), Convert.ToInt32(rgb[2]));
-            }
-            else
-                color = Color.FromName(ColorSetting);
-
-            return color;
-        }
-
-        private bool DecodeBoolean(string BooleanSettingName)
-        {
-            bool result = false;
-
-            string BooleanSetting = ConfigurationManager.AppSettings[BooleanSettingName];
-            if (!String.IsNullOrEmpty(BooleanSetting) && BooleanSetting.Trim().ToUpper().Substring(0, 1) == "Y")
-            {
-                result = true;
-            }
-
-            return result;
         }
 
         #endregion
