@@ -47,8 +47,6 @@
             this.mainSplitter = new System.Windows.Forms.SplitContainer();
             this.lstDirectory = new System.Windows.Forms.ListBox();
             this.pnlPathStatus = new System.Windows.Forms.Panel();
-            this.btnBackupScript = new System.Windows.Forms.Button();
-            this.btnRestoreScript = new System.Windows.Forms.Button();
             this.lblFileCount = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.lblFolderCount = new System.Windows.Forms.Label();
@@ -61,18 +59,22 @@
             this.label5 = new System.Windows.Forms.Label();
             this.scintilla1 = new ScintillaNET.Scintilla();
             this.pnlFileStatus = new System.Windows.Forms.Panel();
-            this.panel10 = new System.Windows.Forms.Panel();
+            this.pnlEditToolbar = new System.Windows.Forms.Panel();
+            this.btnEditPaste = new System.Windows.Forms.Button();
+            this.btnEditCopy = new System.Windows.Forms.Button();
+            this.btnEditCut = new System.Windows.Forms.Button();
             this.btnReplaceAll = new System.Windows.Forms.Button();
             this.btnSaveAs = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.pnlFileToolbar = new System.Windows.Forms.Panel();
             this.lblCurrentFile = new System.Windows.Forms.Label();
-            this.panel9 = new System.Windows.Forms.Panel();
-            this.label2 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.tmrMessage = new System.Windows.Forms.Timer(this.components);
+            this.btnEditDelete = new System.Windows.Forms.Button();
+            this.btnEditUndo = new System.Windows.Forms.Button();
+            this.btnEditRedo = new System.Windows.Forms.Button();
             this.pnlToolbar.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainSplitter)).BeginInit();
@@ -84,14 +86,13 @@
             this.panel3.SuspendLayout();
             this.pnlSaveMessage.SuspendLayout();
             this.pnlFileStatus.SuspendLayout();
-            this.panel10.SuspendLayout();
+            this.pnlEditToolbar.SuspendLayout();
             this.pnlFileToolbar.SuspendLayout();
-            this.panel9.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnlToolbar
             // 
-            this.pnlToolbar.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlToolbar.BackColor = System.Drawing.SystemColors.Control;
             this.pnlToolbar.Controls.Add(this.panel1);
             this.pnlToolbar.Controls.Add(this.btnExport);
             this.pnlToolbar.Controls.Add(this.btnMove);
@@ -114,9 +115,9 @@
             this.panel1.Controls.Add(this.btnREPL);
             this.panel1.Controls.Add(this.cboHelp);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel1.Location = new System.Drawing.Point(747, 0);
+            this.panel1.Location = new System.Drawing.Point(749, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(297, 36);
+            this.panel1.Size = new System.Drawing.Size(297, 38);
             this.panel1.TabIndex = 18;
             // 
             // label3
@@ -287,6 +288,7 @@
             this.mainSplitter.Panel2.Controls.Add(this.scintilla1);
             this.mainSplitter.Panel2.Controls.Add(this.pnlFileStatus);
             this.mainSplitter.Panel2.Controls.Add(this.pnlFileToolbar);
+            this.mainSplitter.Panel2.Padding = new System.Windows.Forms.Padding(3);
             this.mainSplitter.Size = new System.Drawing.Size(1046, 599);
             this.mainSplitter.SplitterDistance = 278;
             this.mainSplitter.TabIndex = 1;
@@ -307,8 +309,7 @@
             // 
             // pnlPathStatus
             // 
-            this.pnlPathStatus.Controls.Add(this.btnBackupScript);
-            this.pnlPathStatus.Controls.Add(this.btnRestoreScript);
+            this.pnlPathStatus.BackColor = System.Drawing.SystemColors.Control;
             this.pnlPathStatus.Controls.Add(this.lblFileCount);
             this.pnlPathStatus.Controls.Add(this.label6);
             this.pnlPathStatus.Controls.Add(this.lblFolderCount);
@@ -318,28 +319,6 @@
             this.pnlPathStatus.Name = "pnlPathStatus";
             this.pnlPathStatus.Size = new System.Drawing.Size(278, 37);
             this.pnlPathStatus.TabIndex = 17;
-            // 
-            // btnBackupScript
-            // 
-            this.btnBackupScript.Image = ((System.Drawing.Image)(resources.GetObject("btnBackupScript.Image")));
-            this.btnBackupScript.Location = new System.Drawing.Point(199, 1);
-            this.btnBackupScript.Name = "btnBackupScript";
-            this.btnBackupScript.Size = new System.Drawing.Size(38, 34);
-            this.btnBackupScript.TabIndex = 21;
-            this.btnBackupScript.UseVisualStyleBackColor = true;
-            this.btnBackupScript.Visible = false;
-            this.btnBackupScript.Click += new System.EventHandler(this.btnBackupScript_Click);
-            // 
-            // btnRestoreScript
-            // 
-            this.btnRestoreScript.Image = ((System.Drawing.Image)(resources.GetObject("btnRestoreScript.Image")));
-            this.btnRestoreScript.Location = new System.Drawing.Point(237, 1);
-            this.btnRestoreScript.Name = "btnRestoreScript";
-            this.btnRestoreScript.Size = new System.Drawing.Size(38, 34);
-            this.btnRestoreScript.TabIndex = 20;
-            this.btnRestoreScript.UseVisualStyleBackColor = true;
-            this.btnRestoreScript.Visible = false;
-            this.btnRestoreScript.Click += new System.EventHandler(this.btnRestoreScript_Click);
             // 
             // lblFileCount
             // 
@@ -391,6 +370,7 @@
             // 
             // lblCurrentDirectory
             // 
+            this.lblCurrentDirectory.BackColor = System.Drawing.SystemColors.Control;
             this.lblCurrentDirectory.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblCurrentDirectory.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCurrentDirectory.Location = new System.Drawing.Point(77, 0);
@@ -402,6 +382,7 @@
             // 
             // panel3
             // 
+            this.panel3.BackColor = System.Drawing.SystemColors.Control;
             this.panel3.Controls.Add(this.label1);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel3.Location = new System.Drawing.Point(0, 0);
@@ -444,100 +425,120 @@
             this.scintilla1.EolMode = ScintillaNET.Eol.Lf;
             this.scintilla1.IndentationGuides = ScintillaNET.IndentView.Real;
             this.scintilla1.Lexer = ScintillaNET.Lexer.Python;
-            this.scintilla1.Location = new System.Drawing.Point(0, 31);
+            this.scintilla1.Location = new System.Drawing.Point(3, 34);
             this.scintilla1.Name = "scintilla1";
-            this.scintilla1.Size = new System.Drawing.Size(764, 531);
+            this.scintilla1.Size = new System.Drawing.Size(758, 525);
             this.scintilla1.TabIndex = 19;
             this.scintilla1.TextChanged += new System.EventHandler(this.scintilla1_TextChanged);
             // 
             // pnlFileStatus
             // 
-            this.pnlFileStatus.Controls.Add(this.panel10);
+            this.pnlFileStatus.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.pnlFileStatus.Controls.Add(this.pnlEditToolbar);
             this.pnlFileStatus.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlFileStatus.Location = new System.Drawing.Point(0, 562);
+            this.pnlFileStatus.Location = new System.Drawing.Point(3, 559);
             this.pnlFileStatus.Name = "pnlFileStatus";
-            this.pnlFileStatus.Size = new System.Drawing.Size(764, 37);
+            this.pnlFileStatus.Size = new System.Drawing.Size(758, 37);
             this.pnlFileStatus.TabIndex = 18;
+            this.pnlFileStatus.Resize += new System.EventHandler(this.pnlFileStatus_Resize);
             // 
-            // panel10
+            // pnlEditToolbar
             // 
-            this.panel10.Controls.Add(this.btnReplaceAll);
-            this.panel10.Controls.Add(this.btnSaveAs);
-            this.panel10.Controls.Add(this.btnSave);
-            this.panel10.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel10.Location = new System.Drawing.Point(543, 0);
-            this.panel10.Name = "panel10";
-            this.panel10.Size = new System.Drawing.Size(221, 37);
-            this.panel10.TabIndex = 9;
+            this.pnlEditToolbar.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.pnlEditToolbar.Controls.Add(this.btnEditRedo);
+            this.pnlEditToolbar.Controls.Add(this.btnEditUndo);
+            this.pnlEditToolbar.Controls.Add(this.btnEditDelete);
+            this.pnlEditToolbar.Controls.Add(this.btnEditPaste);
+            this.pnlEditToolbar.Controls.Add(this.btnEditCopy);
+            this.pnlEditToolbar.Controls.Add(this.btnEditCut);
+            this.pnlEditToolbar.Controls.Add(this.btnReplaceAll);
+            this.pnlEditToolbar.Controls.Add(this.btnSaveAs);
+            this.pnlEditToolbar.Controls.Add(this.btnSave);
+            this.pnlEditToolbar.Location = new System.Drawing.Point(217, 0);
+            this.pnlEditToolbar.Name = "pnlEditToolbar";
+            this.pnlEditToolbar.Size = new System.Drawing.Size(463, 37);
+            this.pnlEditToolbar.TabIndex = 9;
+            // 
+            // btnEditPaste
+            // 
+            this.btnEditPaste.Image = ((System.Drawing.Image)(resources.GetObject("btnEditPaste.Image")));
+            this.btnEditPaste.Location = new System.Drawing.Point(128, 6);
+            this.btnEditPaste.Name = "btnEditPaste";
+            this.btnEditPaste.Size = new System.Drawing.Size(28, 27);
+            this.btnEditPaste.TabIndex = 20;
+            this.btnEditPaste.UseVisualStyleBackColor = false;
+            this.btnEditPaste.Click += new System.EventHandler(this.btnEditPaste_Click);
+            // 
+            // btnEditCopy
+            // 
+            this.btnEditCopy.Image = ((System.Drawing.Image)(resources.GetObject("btnEditCopy.Image")));
+            this.btnEditCopy.Location = new System.Drawing.Point(98, 6);
+            this.btnEditCopy.Name = "btnEditCopy";
+            this.btnEditCopy.Size = new System.Drawing.Size(28, 27);
+            this.btnEditCopy.TabIndex = 19;
+            this.btnEditCopy.UseVisualStyleBackColor = false;
+            this.btnEditCopy.Click += new System.EventHandler(this.btnEditCopy_Click);
+            // 
+            // btnEditCut
+            // 
+            this.btnEditCut.Image = ((System.Drawing.Image)(resources.GetObject("btnEditCut.Image")));
+            this.btnEditCut.Location = new System.Drawing.Point(69, 6);
+            this.btnEditCut.Name = "btnEditCut";
+            this.btnEditCut.Size = new System.Drawing.Size(28, 27);
+            this.btnEditCut.TabIndex = 18;
+            this.btnEditCut.UseVisualStyleBackColor = false;
+            this.btnEditCut.Click += new System.EventHandler(this.btnEditCut_Click);
             // 
             // btnReplaceAll
             // 
-            this.btnReplaceAll.Location = new System.Drawing.Point(3, 4);
+            this.btnReplaceAll.Location = new System.Drawing.Point(201, 6);
             this.btnReplaceAll.Name = "btnReplaceAll";
-            this.btnReplaceAll.Size = new System.Drawing.Size(72, 27);
+            this.btnReplaceAll.Size = new System.Drawing.Size(68, 27);
             this.btnReplaceAll.TabIndex = 17;
-            this.btnReplaceAll.Text = "Replace All";
-            this.btnReplaceAll.UseVisualStyleBackColor = true;
+            this.btnReplaceAll.Text = "Replace";
+            this.btnReplaceAll.UseVisualStyleBackColor = false;
             this.btnReplaceAll.Click += new System.EventHandler(this.btnReplaceAll_Click);
             // 
             // btnSaveAs
             // 
-            this.btnSaveAs.Location = new System.Drawing.Point(79, 4);
+            this.btnSaveAs.Location = new System.Drawing.Point(280, 6);
             this.btnSaveAs.Name = "btnSaveAs";
-            this.btnSaveAs.Size = new System.Drawing.Size(72, 27);
+            this.btnSaveAs.Size = new System.Drawing.Size(70, 27);
             this.btnSaveAs.TabIndex = 15;
             this.btnSaveAs.Text = "Save As...";
-            this.btnSaveAs.UseVisualStyleBackColor = true;
+            this.btnSaveAs.UseVisualStyleBackColor = false;
             this.btnSaveAs.Click += new System.EventHandler(this.btnSaveAs_Click);
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(154, 4);
+            this.btnSave.Location = new System.Drawing.Point(351, 6);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(53, 27);
             this.btnSave.TabIndex = 16;
             this.btnSave.Text = "Save";
-            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // pnlFileToolbar
             // 
             this.pnlFileToolbar.Controls.Add(this.lblCurrentFile);
-            this.pnlFileToolbar.Controls.Add(this.panel9);
             this.pnlFileToolbar.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlFileToolbar.Location = new System.Drawing.Point(0, 0);
+            this.pnlFileToolbar.Location = new System.Drawing.Point(3, 3);
             this.pnlFileToolbar.Name = "pnlFileToolbar";
-            this.pnlFileToolbar.Size = new System.Drawing.Size(764, 31);
+            this.pnlFileToolbar.Size = new System.Drawing.Size(758, 31);
             this.pnlFileToolbar.TabIndex = 0;
             // 
             // lblCurrentFile
             // 
+            this.lblCurrentFile.BackColor = System.Drawing.SystemColors.ControlDark;
             this.lblCurrentFile.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblCurrentFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCurrentFile.Location = new System.Drawing.Point(77, 0);
+            this.lblCurrentFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCurrentFile.Location = new System.Drawing.Point(0, 0);
             this.lblCurrentFile.Name = "lblCurrentFile";
-            this.lblCurrentFile.Size = new System.Drawing.Size(687, 31);
+            this.lblCurrentFile.Size = new System.Drawing.Size(758, 31);
             this.lblCurrentFile.TabIndex = 9;
             this.lblCurrentFile.Text = "<current file>";
-            this.lblCurrentFile.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // panel9
-            // 
-            this.panel9.Controls.Add(this.label2);
-            this.panel9.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel9.Location = new System.Drawing.Point(0, 0);
-            this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(77, 31);
-            this.panel9.TabIndex = 7;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(9, 8);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(63, 13);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "Current File:";
+            this.lblCurrentFile.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // openFileDialog1
             // 
@@ -552,6 +553,36 @@
             // 
             this.tmrMessage.Interval = 800;
             this.tmrMessage.Tick += new System.EventHandler(this.tmrMessage_Tick);
+            // 
+            // btnEditDelete
+            // 
+            this.btnEditDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnEditDelete.Image")));
+            this.btnEditDelete.Location = new System.Drawing.Point(163, 6);
+            this.btnEditDelete.Name = "btnEditDelete";
+            this.btnEditDelete.Size = new System.Drawing.Size(28, 27);
+            this.btnEditDelete.TabIndex = 21;
+            this.btnEditDelete.UseVisualStyleBackColor = false;
+            this.btnEditDelete.Click += new System.EventHandler(this.btnEditDelete_Click);
+            // 
+            // btnEditUndo
+            // 
+            this.btnEditUndo.Image = ((System.Drawing.Image)(resources.GetObject("btnEditUndo.Image")));
+            this.btnEditUndo.Location = new System.Drawing.Point(3, 6);
+            this.btnEditUndo.Name = "btnEditUndo";
+            this.btnEditUndo.Size = new System.Drawing.Size(28, 27);
+            this.btnEditUndo.TabIndex = 22;
+            this.btnEditUndo.UseVisualStyleBackColor = false;
+            this.btnEditUndo.Click += new System.EventHandler(this.btnEditUndo_Click);
+            // 
+            // btnEditRedo
+            // 
+            this.btnEditRedo.Image = ((System.Drawing.Image)(resources.GetObject("btnEditRedo.Image")));
+            this.btnEditRedo.Location = new System.Drawing.Point(32, 6);
+            this.btnEditRedo.Name = "btnEditRedo";
+            this.btnEditRedo.Size = new System.Drawing.Size(28, 27);
+            this.btnEditRedo.TabIndex = 23;
+            this.btnEditRedo.UseVisualStyleBackColor = false;
+            this.btnEditRedo.Click += new System.EventHandler(this.btnEditRedo_Click);
             // 
             // frmMain
             // 
@@ -580,10 +611,8 @@
             this.pnlSaveMessage.ResumeLayout(false);
             this.pnlSaveMessage.PerformLayout();
             this.pnlFileStatus.ResumeLayout(false);
-            this.panel10.ResumeLayout(false);
+            this.pnlEditToolbar.ResumeLayout(false);
             this.pnlFileToolbar.ResumeLayout(false);
-            this.panel9.ResumeLayout(false);
-            this.panel9.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -610,8 +639,6 @@
         private System.Windows.Forms.Label lblCurrentDirectory;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Panel panel9;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lblCurrentFile;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
@@ -627,11 +654,15 @@
         private System.Windows.Forms.Panel pnlSaveMessage;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Timer tmrMessage;
-        private System.Windows.Forms.Panel panel10;
+        private System.Windows.Forms.Panel pnlEditToolbar;
         private System.Windows.Forms.Button btnReplaceAll;
         private System.Windows.Forms.Button btnSaveAs;
         private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.Button btnBackupScript;
-        private System.Windows.Forms.Button btnRestoreScript;
+        private System.Windows.Forms.Button btnEditCut;
+        private System.Windows.Forms.Button btnEditPaste;
+        private System.Windows.Forms.Button btnEditCopy;
+        private System.Windows.Forms.Button btnEditDelete;
+        private System.Windows.Forms.Button btnEditRedo;
+        private System.Windows.Forms.Button btnEditUndo;
     }
 }

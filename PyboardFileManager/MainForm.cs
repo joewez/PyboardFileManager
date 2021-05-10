@@ -87,8 +87,11 @@ namespace PyboardFileManager
             toolTip1.SetToolTip(btnSaveAs, "Save the current file to the current directory with the specified name");
             toolTip1.SetToolTip(btnReplaceAll, "Simple search-and-replace for current file");
             toolTip1.SetToolTip(cboHelp, "Local Help Documents");
-            toolTip1.SetToolTip(btnBackupScript, "Generate a DOS batch file that will backup the contents of the current device.");
-            toolTip1.SetToolTip(btnRestoreScript, "Generate a DOS batch file that will restore a previous backup.");
+            toolTip1.SetToolTip(btnEditUndo, "Undo last edit");
+            toolTip1.SetToolTip(btnEditRedo, "Redo last edit");
+            toolTip1.SetToolTip(btnEditCut, "Cut currently selected text to the clipboard");
+            toolTip1.SetToolTip(btnEditCopy, "Copy currently selected text to the clipboard");
+            toolTip1.SetToolTip(btnEditPaste, "Paste clipboard contents");
 
             // these are the file that can be opened and edited
             _EditableExtensions = ConfigurationManager.AppSettings["EditExtensions"];
@@ -97,8 +100,6 @@ namespace PyboardFileManager
 
             lstDirectory.BackColor = DecodeColor("ExplorerColor");
             lstDirectory.Font = new Font(ConfigurationManager.AppSettings["DirectoryFont"], Convert.ToSingle(ConfigurationManager.AppSettings["DirectoryFontSize"]), FontStyle.Regular);
-            btnBackupScript.Visible = ((ConfigurationManager.AppSettings["ShowBatchButtons"]).ToUpper().Trim() == "Y");
-            btnRestoreScript.Visible = ((ConfigurationManager.AppSettings["ShowBatchButtons"]).ToUpper().Trim() == "Y");
 
             ConfigureForPython(scintilla1);
 
@@ -327,6 +328,7 @@ namespace PyboardFileManager
                     lblCurrentFile.Text = GetFileOnly(_CurrentFile);
                     _FileDirty = false;
                     lblCurrentFile.ForeColor = Color.Black;
+                    scintilla1.EmptyUndoBuffer();
                     RefreshFileList();
                 }
                 else
@@ -363,30 +365,41 @@ namespace PyboardFileManager
             tmrMessage.Enabled = false;
         }
 
-        private void btnRestoreScript_Click(object sender, EventArgs e)
+
+        private void pnlFileStatus_Resize(object sender, EventArgs e)
         {
-            saveFileDialog1.Title = "Generate Restore Batch File";
-            saveFileDialog1.FileName = "restore.bat";
-            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                Cursor.Current = Cursors.WaitCursor;
-                MakeRestoreScript(saveFileDialog1.FileName);
-                Cursor.Current = Cursors.Default;
-                MessageBox.Show("Done.", "Generate Restore");
-            }
+            pnlEditToolbar.Left = (pnlFileStatus.Width - pnlEditToolbar.Width) / 2;
         }
 
-        private void btnBackupScript_Click(object sender, EventArgs e)
+        private void btnEditCut_Click(object sender, EventArgs e)
         {
-            saveFileDialog1.Title = "Generate Backup Batch File";
-            saveFileDialog1.FileName = "backup.bat";
-            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                Cursor.Current = Cursors.WaitCursor;
-                MakeBackupScript(saveFileDialog1.FileName);
-                Cursor.Current = Cursors.Default;
-                MessageBox.Show("Done.", "Generate Backup");
-            }
+            Clipboard.SetText(scintilla1.SelectedText);
+            scintilla1.ReplaceSelection("");
+        }
+
+        private void btnEditCopy_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(scintilla1.SelectedText);
+        }
+
+        private void btnEditPaste_Click(object sender, EventArgs e)
+        {
+            scintilla1.ReplaceSelection(Clipboard.GetText());
+        }
+
+        private void btnEditDelete_Click(object sender, EventArgs e)
+        {
+            scintilla1.ReplaceSelection("");
+        }
+
+        private void btnEditUndo_Click(object sender, EventArgs e)
+        {
+            scintilla1.Undo();
+        }
+
+        private void btnEditRedo_Click(object sender, EventArgs e)
+        {
+            scintilla1.Redo();
         }
 
         #endregion
@@ -428,6 +441,7 @@ namespace PyboardFileManager
             if (saved)
             {
                 _FileDirty = false;
+                scintilla1.EmptyUndoBuffer();
                 lblCurrentFile.ForeColor = Color.Black;
                 if (doRefresh)
                     RefreshFileList();
@@ -504,6 +518,7 @@ namespace PyboardFileManager
                                 scintilla1.Text = contents.Replace(CRLF, LF);
                             }
                             _FileDirty = false;
+                            scintilla1.EmptyUndoBuffer();
                             lblCurrentFile.Text = GetFileOnly(_CurrentFile);
                             lblCurrentFile.ForeColor = Color.Black;
                         }
@@ -850,123 +865,6 @@ namespace PyboardFileManager
             }
 
             return result;
-        }
-
-        private void MakeBackupScript(string output)
-        {
-            List<string> files = new List<string>();
-            addfiles("/", ref files, true);
-            string msg = "";
-            foreach (string item in files)
-            {
-                if (item.StartsWith(LBracket))
-                    msg += item.Substring(1, item.Length - 2) + CRLF;
-                else
-                {
-                    string revitem = item.Replace("/", "\\");
-                    if (EditableFile(item))
-                        msg += "ampy -p " + _PYB.COMM_PORT + " -b " + _PYB.BAUD_RATE.ToString() + " get " + item + " " + revitem.Substring(1) + CRLF;
-                    else
-                        msg += "REM ampy -p " + _PYB.COMM_PORT + " -b " + _PYB.BAUD_RATE.ToString() + " get " + item + " " + revitem.Substring(1) + CRLF;
-                }
-            }
-            using (StreamWriter sw = new StreamWriter(output))
-            {
-                sw.Write(msg);
-            }
-        }
-
-        private void MakeRestoreScript(string output)
-        {
-            List<string> files = new List<string>();
-            addfiles("/", ref files, false);
-            string msg = "";
-            foreach (string item in files)
-            {
-                string revitem = item.Replace("/", "\\");
-                if (item.StartsWith(LBracket))
-                    msg += "ampy -p " + _PYB.COMM_PORT + " -b " + _PYB.BAUD_RATE.ToString() + " " + item.Substring(1, item.Length - 2) + CRLF;
-                else
-                    msg += "ampy -p " + _PYB.COMM_PORT + " -b " + _PYB.BAUD_RATE.ToString() + " put " + revitem.Substring(1) + " " + item + CRLF;
-            }
-            using (StreamWriter sw = new StreamWriter(output))
-            {
-                sw.Write(msg);
-            }
-        }
-
-        private void addfiles(string path, ref List<string> files, bool forBackup)
-        {
-            List<string> items = _PYB.GetDir(path, LBracket, RBracket);
-            foreach (string item in items)
-                if (!item.StartsWith(LBracket))
-                {
-                    if (path.EndsWith("/"))
-                        files.Add(path + item);
-                    else
-                        files.Add(path + "/" + item);
-                }
-            foreach (string item in items)
-                if (item.StartsWith(LBracket))
-                {
-                    string newdir = item.Substring(1, item.Length - 2);
-                    string newpath = path;
-                    if (newpath.EndsWith("/"))
-                        newpath += newdir;
-                    else
-                        newpath += "/" + newdir;
-
-                    if (forBackup)
-                    {
-                        int dirCount = 0;
-                        if (path != "/")
-                        {
-                            string[] dirs = path.Substring(1).Split('/');
-                            foreach (string dir in dirs)
-                                files.Add(LBracket + "cd " + dir + RBracket);
-                            dirCount = dirs.Length;
-                        }
-                        files.Add(LBracket + "mkdir " + newdir + RBracket);
-                        if (path != "/")
-                        {
-                            for (int i = 1; i <= dirCount; i++)
-                                files.Add(LBracket + "cd .." + RBracket);
-                        }
-                    }
-                    else
-                    {
-                        files.Add(LBracket + "mkdir " + newpath.Substring(1) + RBracket);
-                    }
-
-                    addfiles(newpath, ref files, forBackup);
-                }
-
-        }
-
-        private void CleanFile(string FileToClean)
-        {
-            if (File.Exists(FileToClean))
-            {
-                string text = File.ReadAllText(FileToClean);
-                if (text.Contains("\n"))
-                    text = text.Replace("\r", "");
-                else
-                    text = text.Replace("\r", "\n");
-                File.WriteAllText(FileToClean, text);
-            }
-        }
-
-        private void CleanPath(string RootPath)
-        {
-            string[] files = Directory.GetFiles(RootPath);
-            foreach (string file in files)
-            {
-                if (EditableFile(file))
-                    CleanFile(file);
-            }
-            string[] dirs = Directory.GetDirectories(RootPath);
-            foreach (string dir in dirs)
-                CleanPath(dir);
         }
 
         #endregion
