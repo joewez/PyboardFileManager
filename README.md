@@ -2,9 +2,10 @@
 Windows GUI for Pyboard.py Devices
 <p align="center">
   <img src="https://github.com/joewez/PyboardFileManager/blob/main/pybfm.jpg" alt="Screenshot"/>
+  <img src="https://github.com/joewez/PyboardFileManager/blob/main/pybfm-repl.jpg" alt="REPL Screenshot"/>
 </p>
 
-A simple GUI wrapper that executes the Pyboard.py (https://github.com/micropython/micropython/blob/master/tools/pyboard.py) command to manipulate the files on an device running MicroPython.
+A simple GUI wrapper that executes the <b>pyboard.py</b> script (https://github.com/micropython/micropython/blob/master/tools/pyboard.py) command to manipulate the files on an device running MicroPython.  The device must support raw REPL over the serial port in order for this application to function properly.
 
 It was written in C# in Visual Studio 2019, so you will need VS Express or better to compile it.  It uses the Scintilla editor control (https://github.com/jacobslusser/ScintillaNET) which allows for MicroPython syntax highlighting.
 
@@ -86,11 +87,12 @@ All the features are pretty self-explanatory, but here is just a short descripti
 <b>CAVEATS:</b>
 
 - This editor is only meant to edit a single file at a time
-- Although it should work with any device that Pyboard.py works with, it has only been tested with...
+- Although it should work with any device that <b>pyboard.py</b> works with, it has only been tested with...
     - Wemos D1 Mini
     - Witty Cloud Board 
-    - Generic NodeMCU Board.
-    - (Primarily ESP8266 Boards)
+    - Generic NodeMCU Board
+    - Pyboard 1.1
+    - Raspberry Pi Pico
 - This is mainly for text files (binary files will upload to the device but will not download correctly)
 - Switching between the REPL and the editor (and back) is a little rough... especially with the limited built-in serial terminal.  
     - You may have to "Refresh" or try again to get a feature to work.
