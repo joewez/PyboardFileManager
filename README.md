@@ -1,5 +1,8 @@
 # Pyboard File Manager
-Windows GUI for Pyboard.py Devices
+Windows GUI for Pyboard.py Compatible Devices
+
+<i>Note: This project is not associated in anyway with the Pyboard hardware project or the MicroPython organization.</i>
+
 <p align="center">
   <img src="https://github.com/joewez/PyboardFileManager/blob/main/pybfm.jpg" alt="Screenshot"/>
   <img src="https://github.com/joewez/PyboardFileManager/blob/main/pybfm-repl.jpg" alt="REPL Screenshot"/>
@@ -52,8 +55,9 @@ All the features are pretty self-explanatory, but here is just a short descripti
   - <b>REPL</b> will open a MicroPython REPL window
   
 - Editing Commands
+  - <b>Undo/Redo/Cut/Copy/Paste/Delete</b> standard editing commands
   - <b>Replace All</b> will do a simple search and replace on the current file being edited
-  - <b>Save As</b> will save the current file to the device using the name you give it in the current directory
+  - <b>Save As</b> will save the current file to the device using the name you give it in the <i>current</i> directory
   - <b>Save</b> will save the current file to the device
 
 <b>ADDITIONAL INFO:</b>
@@ -93,6 +97,9 @@ All the features are pretty self-explanatory, but here is just a short descripti
     - Generic NodeMCU Board
     - Pyboard 1.1
     - Raspberry Pi Pico
+- To use the internal REPL with the some devices you may have to change these settings:
+    - TerminalDTREnable
+    - TerminalRTSEnable
 - This is mainly for text files (binary files will upload to the device but will not download correctly)
 - Switching between the REPL and the editor (and back) is a little rough... especially with the limited built-in serial terminal.  
     - You may have to "Refresh" or try again to get a feature to work.
@@ -102,11 +109,7 @@ All the features are pretty self-explanatory, but here is just a short descripti
 
 <b>ROADMAP:</b>
 
-- Support multiple files editing at one time
-    - Split window functionality for file compares
 - Provide proper editing functions
-    - Simple edit commands
     - Simple find
-    - Python formatting cleanup
     - Highlighting support for other text file types (html, xml, etc,,,)
 - Proper options selection window.
