@@ -63,7 +63,7 @@ All the features are pretty self-explanatory, but here is just a short descripti
 <b>ADDITIONAL INFO:</b>
 
 - Configuration setting are located in the PyboardFilemanager.exe.config file
-  - CommPort designation can be a name like COM3 (no colon) or just a number
+  - <b><i>CommPort</i></b> designation can be a name like COM3 (no colon) or just a number
   - The application defaults to 115200 baud for serial communications
   - If <b><i>ExternalTerminal</i></b> is set to "Y" the <b><i>TerminalApp</i></b>, <b><i>TerminalAppArgs</i></b> and 
     <b><i>TerminalAppTitle</i></b> settings are used
@@ -87,7 +87,7 @@ All the features are pretty self-explanatory, but here is just a short descripti
   - <b><i>UniqueSessions</i></b> indicates if a single session directory is used or a new one for each program start
     - The "session" directory is where a file is stored while being edited
   - Color settings may be a WebColor name or a 3 value, comma-separated list of the RGB values to use
-  - CommPortExclusions should be just the numbers seperated by commas
+  - <b><i>CommPortExclusions</i></b> should be just the numbers seperated by commas
 
 <b>CAVEATS:</b>
 
