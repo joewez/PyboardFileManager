@@ -20,7 +20,7 @@ A precompiled binary is available for download here:
   
 Just unzip to a convenient location and run the PyboardFileManager.exe. 
 
-<b>Dependencies:</b> 
+<b>DEPENDENCIES:</b> 
 
 - Python 3.X
 - .Net Framework 
@@ -63,8 +63,8 @@ All the features are pretty self-explanatory, but here is just a short descripti
 <b>ADDITIONAL INFO:</b>
 
 - Configuration setting are located in the PyboardFilemanager.exe.config file
+  - CommPort designation can be a name like COM3 (no colon) or just a number
   - The application defaults to 115200 baud for serial communications
-  - Most settings are self-explanatory
   - If <b><i>ExternalTerminal</i></b> is set to "Y" the <b><i>TerminalApp</i></b>, <b><i>TerminalAppArgs</i></b> and 
     <b><i>TerminalAppTitle</i></b> settings are used
     - <b><i>TerminalApp</i></b> is the EXE to run
@@ -87,21 +87,21 @@ All the features are pretty self-explanatory, but here is just a short descripti
   - <b><i>UniqueSessions</i></b> indicates if a single session directory is used or a new one for each program start
     - The "session" directory is where a file is stored while being edited
   - Color settings may be a WebColor name or a 3 value, comma-separated list of the RGB values to use
+  - CommPortExclusions should be just the numbers seperated by commas
 
 <b>CAVEATS:</b>
 
-- This editor is only meant to edit a single file at a time
 - Although it should work with any device that <b>pyboard.py</b> works with, it has only been tested with...
     - Wemos D1 Mini
     - Witty Cloud Board 
     - Generic NodeMCU Board
     - Pyboard 1.1
-    - Raspberry Pi Pico
-- To use the internal REPL with the some devices you may have to change these settings:
-    - TerminalDTREnable
-    - TerminalRTSEnable
-- This is mainly for text files (binary files will upload to the device but will not download correctly)
-- Switching between the REPL and the editor (and back) is a little rough... especially with the limited built-in serial terminal.  
+    - Raspberry Pi Pico (requires DTR to be enabled)
+- This can only edit basic text files and is focused on editing MicroPython source code
+- Binary files can be loaded and exported
+- This editor is only meant to edit a single file at a time
+- You cannot delete a directory unless it is empty
+- Switching between the REPL and the editor (and back) is a little rough... especially with an ESP8266 and the internal REPL.  
     - You may have to "Refresh" or try again to get a feature to work.
     - Sometimes the software will pause until the device is momentarily unplugged
     - This is highly dependent on the type of application that is running
@@ -109,7 +109,5 @@ All the features are pretty self-explanatory, but here is just a short descripti
 
 <b>ROADMAP:</b>
 
-- Provide proper editing functions
-    - Simple find
-    - Highlighting support for other text file types (html, xml, etc,,,)
-- Proper options selection window.
+- Syntax highlighting for other text file types (html, xml, etc,,,)
+- Proper Options/Configuration editing window.

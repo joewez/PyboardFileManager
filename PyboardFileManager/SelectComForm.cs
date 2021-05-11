@@ -1,7 +1,4 @@
 ﻿using System;
-using System.IO.Ports;
-using System.Data;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace PyboardFileManager
@@ -9,6 +6,7 @@ namespace PyboardFileManager
     public partial class SelectComForm : Form
     {
         public string SELECTED_COMM_PORT = "EXIT";
+        public bool DTR_ENABLED = false;
 
         public SelectComForm()
         {
@@ -26,6 +24,7 @@ namespace PyboardFileManager
         private void btnOK_Click(object sender, EventArgs e)
         {
             SELECTED_COMM_PORT = cboPorts.Text;
+            DTR_ENABLED = chkDTREnabled.Checked;
             this.Close();
         }
 

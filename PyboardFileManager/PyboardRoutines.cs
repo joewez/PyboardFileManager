@@ -6,7 +6,6 @@ using System.IO;
 using System.IO.Ports;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PyboardFileManager
@@ -15,6 +14,8 @@ namespace PyboardFileManager
     {
         public string COMM_PORT = "";
         public int BAUD_RATE = 115200;
+        public int WAIT = 0;
+        public bool DTR_ENABLED = false;
 
         private string _python_exe = "python";
         private string _command_prefix = "";
@@ -41,14 +42,21 @@ namespace PyboardFileManager
                     goodPorts.Add(port);
             }
 
-            COMM_PORT = ConfigurationManager.AppSettings["CommPort"];
+            COMM_PORT = ConfigurationManager.AppSettings["CommPort"].Trim();
+            if (COMM_PORT != "" && !COMM_PORT.ToUpper().StartsWith("COM"))
+                COMM_PORT = "COM" + COMM_PORT;
+
+            DTR_ENABLED = Utils.DecodeBoolean("DTREnable");
             if (!String.IsNullOrEmpty(COMM_PORT))
             {
                 bool found = false;
                 foreach (string port in goodPorts)
                 {
                     if (port == COMM_PORT)
-                        found = true;
+                    {
+                        found = true;                        
+                        break;
+                    }
                 }
                 if (!found)
                 {
@@ -58,6 +66,7 @@ namespace PyboardFileManager
                         ((ComboBox)s.Controls["cboPorts"]).Items.Add(port);
                     s.ShowDialog();
                     COMM_PORT = s.SELECTED_COMM_PORT;
+                    DTR_ENABLED = s.DTR_ENABLED;
                     s.Dispose();
                 }
             }
@@ -73,6 +82,7 @@ namespace PyboardFileManager
                         ((ComboBox)s.Controls["cboPorts"]).Items.Add(port);
                     s.ShowDialog();
                     COMM_PORT = s.SELECTED_COMM_PORT;
+                    DTR_ENABLED = s.DTR_ENABLED;
                     s.Dispose();
                 }
             }
@@ -81,7 +91,16 @@ namespace PyboardFileManager
             if (baudratestr != "")
                 BAUD_RATE = Convert.ToInt32(baudratestr);
 
-            _command_prefix = "pyboard.py -d " + COMM_PORT + " -b " + BAUD_RATE.ToString() + " ";
+            string waitstr = ConfigurationManager.AppSettings["Wait"];
+            if (waitstr != "")
+                WAIT = Convert.ToInt32(waitstr);
+
+            StringBuilder cmd = new StringBuilder("pyboard.py");
+            cmd.Append(" -d " + COMM_PORT);
+            cmd.Append(" -b " + BAUD_RATE.ToString());
+            cmd.Append(" -w " + WAIT.ToString());
+            cmd.Append(" ");
+            _command_prefix = cmd.ToString();
 
             string pythonexestr = ConfigurationManager.AppSettings["PythonExe"];
             if (pythonexestr != "")

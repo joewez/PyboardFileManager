@@ -31,12 +31,13 @@
             this.label1 = new System.Windows.Forms.Label();
             this.cboPorts = new System.Windows.Forms.ComboBox();
             this.btnOK = new System.Windows.Forms.Button();
+            this.chkDTREnabled = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(34, 13);
+            this.label1.Location = new System.Drawing.Point(10, 11);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(63, 13);
             this.label1.TabIndex = 0;
@@ -45,14 +46,14 @@
             // cboPorts
             // 
             this.cboPorts.FormattingEnabled = true;
-            this.cboPorts.Location = new System.Drawing.Point(37, 30);
+            this.cboPorts.Location = new System.Drawing.Point(13, 28);
             this.cboPorts.Name = "cboPorts";
             this.cboPorts.Size = new System.Drawing.Size(121, 21);
             this.cboPorts.TabIndex = 1;
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(59, 65);
+            this.btnOK.Location = new System.Drawing.Point(140, 27);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 2;
@@ -60,11 +61,22 @@
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
+            // chkDTREnabled
+            // 
+            this.chkDTREnabled.AutoSize = true;
+            this.chkDTREnabled.Location = new System.Drawing.Point(15, 59);
+            this.chkDTREnabled.Name = "chkDTREnabled";
+            this.chkDTREnabled.Size = new System.Drawing.Size(91, 17);
+            this.chkDTREnabled.TabIndex = 3;
+            this.chkDTREnabled.Text = "DTR Enabled";
+            this.chkDTREnabled.UseVisualStyleBackColor = true;
+            // 
             // SelectComForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(196, 100);
+            this.ClientSize = new System.Drawing.Size(225, 91);
+            this.Controls.Add(this.chkDTREnabled);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.cboPorts);
             this.Controls.Add(this.label1);
@@ -85,5 +97,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cboPorts;
         private System.Windows.Forms.Button btnOK;
+        private System.Windows.Forms.CheckBox chkDTREnabled;
     }
 }

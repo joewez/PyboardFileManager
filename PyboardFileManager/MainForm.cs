@@ -94,7 +94,7 @@ namespace PyboardFileManager
             toolTip1.SetToolTip(btnEditPaste, "Paste clipboard contents");
 
             // these are the file that can be opened and edited
-            _EditableExtensions = ConfigurationManager.AppSettings["EditExtensions"];
+            _EditableExtensions = ConfigurationManager.AppSettings["EditableExtensions"];
             if (String.IsNullOrWhiteSpace(_EditableExtensions))
                 _EditableExtensions = "py,txt,html,js,css,json";
 
@@ -365,41 +365,91 @@ namespace PyboardFileManager
             tmrMessage.Enabled = false;
         }
 
-
         private void pnlFileStatus_Resize(object sender, EventArgs e)
         {
-            pnlEditToolbar.Left = (pnlFileStatus.Width - pnlEditToolbar.Width) / 2;
+            try
+            {
+                pnlEditToolbar.Left = (pnlFileStatus.Width - pnlEditToolbar.Width) / 2;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
         }
 
         private void btnEditCut_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText(scintilla1.SelectedText);
-            scintilla1.ReplaceSelection("");
+            try
+            {
+                Clipboard.SetText(scintilla1.SelectedText);
+                scintilla1.ReplaceSelection("");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
         }
 
         private void btnEditCopy_Click(object sender, EventArgs e)
         {
+            try
+            {
+                Clipboard.SetText(scintilla1.SelectedText);
+                scintilla1.ReplaceSelection("");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
             Clipboard.SetText(scintilla1.SelectedText);
         }
 
         private void btnEditPaste_Click(object sender, EventArgs e)
         {
-            scintilla1.ReplaceSelection(Clipboard.GetText());
+            try
+            {
+                scintilla1.ReplaceSelection(Clipboard.GetText());
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
         }
 
         private void btnEditDelete_Click(object sender, EventArgs e)
         {
-            scintilla1.ReplaceSelection("");
+            try
+            {
+                scintilla1.ReplaceSelection("");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
         }
 
         private void btnEditUndo_Click(object sender, EventArgs e)
         {
-            scintilla1.Undo();
+            try
+            {
+                scintilla1.Undo();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
         }
 
         private void btnEditRedo_Click(object sender, EventArgs e)
         {
-            scintilla1.Redo();
+            try
+            {
+                scintilla1.Redo();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
         }
 
         #endregion
@@ -704,7 +754,7 @@ namespace PyboardFileManager
             //}
             else
             {
-                TerminalForm terminal = new TerminalForm(_PYB.COMM_PORT, _PYB.BAUD_RATE, cmd);
+                TerminalForm terminal = new TerminalForm(_PYB.COMM_PORT, _PYB.BAUD_RATE, cmd, _PYB.DTR_ENABLED);
                 terminal.ShowDialog();
             }
         }

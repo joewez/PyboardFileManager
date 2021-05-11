@@ -60,6 +60,9 @@
             this.scintilla1 = new ScintillaNET.Scintilla();
             this.pnlFileStatus = new System.Windows.Forms.Panel();
             this.pnlEditToolbar = new System.Windows.Forms.Panel();
+            this.btnEditRedo = new System.Windows.Forms.Button();
+            this.btnEditUndo = new System.Windows.Forms.Button();
+            this.btnEditDelete = new System.Windows.Forms.Button();
             this.btnEditPaste = new System.Windows.Forms.Button();
             this.btnEditCopy = new System.Windows.Forms.Button();
             this.btnEditCut = new System.Windows.Forms.Button();
@@ -72,9 +75,6 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.tmrMessage = new System.Windows.Forms.Timer(this.components);
-            this.btnEditDelete = new System.Windows.Forms.Button();
-            this.btnEditUndo = new System.Windows.Forms.Button();
-            this.btnEditRedo = new System.Windows.Forms.Button();
             this.pnlToolbar.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainSplitter)).BeginInit();
@@ -135,7 +135,7 @@
             this.btnREPL.ForeColor = System.Drawing.Color.Black;
             this.btnREPL.Image = ((System.Drawing.Image)(resources.GetObject("btnREPL.Image")));
             this.btnREPL.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnREPL.Location = new System.Drawing.Point(219, 2);
+            this.btnREPL.Location = new System.Drawing.Point(219, 3);
             this.btnREPL.Name = "btnREPL";
             this.btnREPL.Size = new System.Drawing.Size(73, 31);
             this.btnREPL.TabIndex = 13;
@@ -295,7 +295,7 @@
             // 
             // lstDirectory
             // 
-            this.lstDirectory.BackColor = System.Drawing.Color.DarkSeaGreen;
+            this.lstDirectory.BackColor = System.Drawing.Color.Azure;
             this.lstDirectory.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lstDirectory.Font = new System.Drawing.Font("Consolas", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lstDirectory.FormattingEnabled = true;
@@ -459,6 +459,36 @@
             this.pnlEditToolbar.Size = new System.Drawing.Size(463, 37);
             this.pnlEditToolbar.TabIndex = 9;
             // 
+            // btnEditRedo
+            // 
+            this.btnEditRedo.Image = ((System.Drawing.Image)(resources.GetObject("btnEditRedo.Image")));
+            this.btnEditRedo.Location = new System.Drawing.Point(32, 6);
+            this.btnEditRedo.Name = "btnEditRedo";
+            this.btnEditRedo.Size = new System.Drawing.Size(28, 27);
+            this.btnEditRedo.TabIndex = 23;
+            this.btnEditRedo.UseVisualStyleBackColor = false;
+            this.btnEditRedo.Click += new System.EventHandler(this.btnEditRedo_Click);
+            // 
+            // btnEditUndo
+            // 
+            this.btnEditUndo.Image = ((System.Drawing.Image)(resources.GetObject("btnEditUndo.Image")));
+            this.btnEditUndo.Location = new System.Drawing.Point(3, 6);
+            this.btnEditUndo.Name = "btnEditUndo";
+            this.btnEditUndo.Size = new System.Drawing.Size(28, 27);
+            this.btnEditUndo.TabIndex = 22;
+            this.btnEditUndo.UseVisualStyleBackColor = false;
+            this.btnEditUndo.Click += new System.EventHandler(this.btnEditUndo_Click);
+            // 
+            // btnEditDelete
+            // 
+            this.btnEditDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnEditDelete.Image")));
+            this.btnEditDelete.Location = new System.Drawing.Point(163, 6);
+            this.btnEditDelete.Name = "btnEditDelete";
+            this.btnEditDelete.Size = new System.Drawing.Size(28, 27);
+            this.btnEditDelete.TabIndex = 21;
+            this.btnEditDelete.UseVisualStyleBackColor = false;
+            this.btnEditDelete.Click += new System.EventHandler(this.btnEditDelete_Click);
+            // 
             // btnEditPaste
             // 
             this.btnEditPaste.Image = ((System.Drawing.Image)(resources.GetObject("btnEditPaste.Image")));
@@ -553,36 +583,6 @@
             // 
             this.tmrMessage.Interval = 800;
             this.tmrMessage.Tick += new System.EventHandler(this.tmrMessage_Tick);
-            // 
-            // btnEditDelete
-            // 
-            this.btnEditDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnEditDelete.Image")));
-            this.btnEditDelete.Location = new System.Drawing.Point(163, 6);
-            this.btnEditDelete.Name = "btnEditDelete";
-            this.btnEditDelete.Size = new System.Drawing.Size(28, 27);
-            this.btnEditDelete.TabIndex = 21;
-            this.btnEditDelete.UseVisualStyleBackColor = false;
-            this.btnEditDelete.Click += new System.EventHandler(this.btnEditDelete_Click);
-            // 
-            // btnEditUndo
-            // 
-            this.btnEditUndo.Image = ((System.Drawing.Image)(resources.GetObject("btnEditUndo.Image")));
-            this.btnEditUndo.Location = new System.Drawing.Point(3, 6);
-            this.btnEditUndo.Name = "btnEditUndo";
-            this.btnEditUndo.Size = new System.Drawing.Size(28, 27);
-            this.btnEditUndo.TabIndex = 22;
-            this.btnEditUndo.UseVisualStyleBackColor = false;
-            this.btnEditUndo.Click += new System.EventHandler(this.btnEditUndo_Click);
-            // 
-            // btnEditRedo
-            // 
-            this.btnEditRedo.Image = ((System.Drawing.Image)(resources.GetObject("btnEditRedo.Image")));
-            this.btnEditRedo.Location = new System.Drawing.Point(32, 6);
-            this.btnEditRedo.Name = "btnEditRedo";
-            this.btnEditRedo.Size = new System.Drawing.Size(28, 27);
-            this.btnEditRedo.TabIndex = 23;
-            this.btnEditRedo.UseVisualStyleBackColor = false;
-            this.btnEditRedo.Click += new System.EventHandler(this.btnEditRedo_Click);
             // 
             // frmMain
             // 

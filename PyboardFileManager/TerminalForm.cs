@@ -16,13 +16,15 @@ namespace PyboardFileManager
         private string _readBuffer = string.Empty;
         private int _bufferLimit = 16384;
         private int _bufferResetSize = 2048;
+        private bool _dtrenable = false;
 
-        public TerminalForm(string ComPort, int BaudRate, string Command)
+        public TerminalForm(string ComPort, int BaudRate, string Command, bool DTREnable)
         {
             InitializeComponent();
             _comport = ComPort;
             _baudrate = BaudRate;
             _command = Command;
+            _dtrenable = DTREnable;
         }
 
         private void TerminalForm_Load(object sender, EventArgs e)
@@ -40,8 +42,7 @@ namespace PyboardFileManager
             {
                 serialPort1.PortName = _comport;
                 serialPort1.BaudRate = _baudrate;
-                serialPort1.DtrEnable = Utils.DecodeBoolean("TerminalDTREnable");
-                serialPort1.RtsEnable = Utils.DecodeBoolean("TerminalRTSEnable");
+                serialPort1.DtrEnable = _dtrenable;
                 serialPort1.Open();
                 SendCtrlC();
             }
