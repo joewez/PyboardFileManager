@@ -92,10 +92,11 @@ All the features are pretty self-explanatory, but here is just a short descripti
 <b>CAVEATS:</b>
 
 - Although it should work with any device that <b>pyboard.py</b> works with, it has only been tested with...
+    - Pyboard v1.1
+    - TPYBoard
     - Wemos D1 Mini
     - Witty Cloud Board 
     - Generic NodeMCU Board
-    - Pyboard 1.1
     - Raspberry Pi Pico (requires DTR to be enabled)
 - This can only edit basic text files and is focused on editing MicroPython source code
 - Binary files can be loaded and exported
