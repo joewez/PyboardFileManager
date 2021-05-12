@@ -395,13 +395,11 @@ namespace PyboardFileManager
             try
             {
                 Clipboard.SetText(scintilla1.SelectedText);
-                scintilla1.ReplaceSelection("");
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
             }
-            Clipboard.SetText(scintilla1.SelectedText);
         }
 
         private void btnEditPaste_Click(object sender, EventArgs e)
