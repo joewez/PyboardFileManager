@@ -28,5 +28,9 @@ namespace PyboardFileManager
             this.Close();
         }
 
+        private void btnQuit_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

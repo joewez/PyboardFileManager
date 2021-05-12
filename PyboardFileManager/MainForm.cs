@@ -344,7 +344,7 @@ namespace PyboardFileManager
         private void scintilla1_TextChanged(object sender, EventArgs e)
         {
             _FileDirty = true;
-            lblCurrentFile.ForeColor = Color.Red;
+            lblCurrentFile.ForeColor = Color.DarkRed;
         }
 
         private void lstDirectory_DoubleClick(object sender, EventArgs e)
