@@ -16,14 +16,15 @@ As a development tool, I wrote the utility to mainly just edit the files directl
 
 A precompiled binary is available for download here:
 
-  http://wezensky.no-ip.org/shared/pybfm.zip
+  https://wezensky.no-ip.org/shared/pybfm.zip
   
 Just unzip to a convenient location and run the PyboardFileManager.exe. 
 
 <b>DEPENDENCIES:</b> 
 
 - Python 3.X
-- .Net Framework 
+- Pyboard.py  (pip3 install pyboard)
+- .Net Framework (maybe)
 
 <b>HOW TO START:</b>
 
