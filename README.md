@@ -5,7 +5,12 @@ Windows GUI for Pyboard.py Compatible Devices
 
 <p align="center">
   <img src="https://github.com/joewez/PyboardFileManager/blob/main/pybfm.jpg" alt="Screenshot"/>
+</p>
+<p align="center">
   <img src="https://github.com/joewez/PyboardFileManager/blob/main/pybfm-repl.jpg" alt="REPL Screenshot"/>
+</p>
+<p align="center">
+  <img src="https://github.com/joewez/PyboardFileManager/blob/main/rp2-repl.jpg" alt="RP2 REPL Screenshot"/>
 </p>
 
 A simple GUI wrapper that executes the <b>pyboard.py</b> script (https://github.com/micropython/micropython/blob/master/tools/pyboard.py) command to manipulate the files on an device running MicroPython.  The device must support raw REPL over the serial port in order for this application to function properly.
