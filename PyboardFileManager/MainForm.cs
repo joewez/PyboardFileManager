@@ -230,7 +230,7 @@ namespace PyboardFileManager
 
         private void btnMkdir_Click(object sender, EventArgs e)
         {
-            string newdir = Microsoft.VisualBasic.Interaction.InputBox("New directory under " + lblCurrentDirectory.Text + ":", "Create Directory", "");
+            string newdir = Microsoft.VisualBasic.Interaction.InputBox("New directory under " + lblPath.Text + ":", "Create Directory", "");
             if (newdir != "")
             {
                 if (!newdir.Contains("."))
@@ -289,6 +289,7 @@ namespace PyboardFileManager
                 HelpForm help = new HelpForm();
                 help.Text = ConfigurationManager.AppSettings["HelpTitle" + (current + 1).ToString()];
                 ((WebBrowser)help.Controls["webBrowser1"]).Url = new Uri(link);
+                help.Controls["webBrowser1"].Dock = DockStyle.Fill;
                 help.Show();
             }
         }
@@ -460,6 +461,7 @@ namespace PyboardFileManager
             Height = Settings.Default.WindowHeight;
             Top = Settings.Default.WindowTop < 0 ? 0 : Settings.Default.WindowTop;
             Left = Settings.Default.WindowLeft < 0 ? 0 : Settings.Default.WindowLeft;
+            mainSplitter.SplitterDistance = Settings.Default.SplitterWidth < 25 ? 25 : Settings.Default.SplitterWidth;
         }
 
         private void SaveWindow()
@@ -468,6 +470,7 @@ namespace PyboardFileManager
             Settings.Default.WindowWidth = Width;
             Settings.Default.WindowLeft = Left;
             Settings.Default.WindowTop = Top;
+            Settings.Default.SplitterWidth = mainSplitter.SplitterDistance;
             Settings.Default.Save();
         }
 
@@ -611,7 +614,7 @@ namespace PyboardFileManager
             }
             lblFolderCount.Text = folderCount.ToString();
             lblFileCount.Text = fileCount.ToString();
-            lblCurrentDirectory.Text = (_CurrentPath == "") ? "/" : _CurrentPath;
+            lblPath.Text = (_CurrentPath == "") ? "/ (root)" : _CurrentPath;
         }
 
         private bool OKToContinue()

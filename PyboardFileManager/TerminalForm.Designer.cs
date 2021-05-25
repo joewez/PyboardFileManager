@@ -46,12 +46,13 @@
             this.txtDisplay.Location = new System.Drawing.Point(0, 0);
             this.txtDisplay.Multiline = true;
             this.txtDisplay.Name = "txtDisplay";
+            this.txtDisplay.ReadOnly = true;
             this.txtDisplay.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtDisplay.Size = new System.Drawing.Size(955, 553);
             this.txtDisplay.TabIndex = 0;
+            this.txtDisplay.WordWrap = false;
             this.txtDisplay.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtDisplay_KeyDown);
             this.txtDisplay.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtDisplay_KeyPress);
-            this.txtDisplay.MouseMove += new System.Windows.Forms.MouseEventHandler(this.txtDisplay_MouseMove);
             this.txtDisplay.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.txtDisplay_PreviewKeyDown);
             // 
             // serialPort1

@@ -32,5 +32,17 @@ namespace PyboardFileManager
         {
             this.Close();
         }
+
+        private void btnOptions_Click(object sender, EventArgs e)
+        {
+            if (Height == 161)
+            {
+                Height = 497;
+            }
+            else if (Height == 497)
+            {
+                Height = 161;
+            }
+        }
     }
 }

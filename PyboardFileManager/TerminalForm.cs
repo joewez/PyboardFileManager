@@ -9,45 +9,71 @@ namespace PyboardFileManager
 {
     public partial class TerminalForm : Form
     {
-        private string _comport = "COM3";
-        private int _baudrate = 115200;
-        private string _command = string.Empty;
         private bool _command_has_run = false;
-        private string _readBuffer = string.Empty;
+        private bool _dtrEnable = false;
+        private int _baudRate = 115200;
         private int _bufferLimit = 16384;
         private int _bufferResetSize = 2048;
-        private bool _dtrenable = false;
+        private string _comPort = "COM3";
+        private string _command = string.Empty;
+        private string _readBuffer = string.Empty;
 
         public TerminalForm(string ComPort, int BaudRate, string Command, bool DTREnable)
         {
-            InitializeComponent();
-            _comport = ComPort;
-            _baudrate = BaudRate;
-            _command = Command;
-            _dtrenable = DTREnable;
+            try
+            {
+                InitializeComponent();
+                _comPort = ComPort;
+                _baudRate = BaudRate;
+                _command = Command;
+                _dtrEnable = DTREnable;
+            }
+            catch (Exception ex)
+            {
+                Log(ex.Message);
+            }
         }
 
         private void TerminalForm_Load(object sender, EventArgs e)
         {
-            txtDisplay.Font = new Font(ConfigurationManager.AppSettings["TerminalFont"], Convert.ToSingle(ConfigurationManager.AppSettings["TerminalFontSize"]), FontStyle.Bold);
-            txtDisplay.BackColor = Utils.DecodeColor("TerminalBackColor");
-            txtDisplay.ForeColor = Utils.DecodeColor("TerminalForeColor");
+            try
+            {
+                txtDisplay.Font = new Font(ConfigurationManager.AppSettings["TerminalFont"], Convert.ToSingle(ConfigurationManager.AppSettings["TerminalFontSize"]), FontStyle.Bold);
+                txtDisplay.BackColor = Utils.DecodeColor("TerminalBackColor");
+                txtDisplay.ForeColor = Utils.DecodeColor("TerminalForeColor");
 
-            GetWindowValue();
+                txtDisplay.ShortcutsEnabled = false;
+                txtDisplay.ReadOnly = true;
+
+                GetWindowValue();
+            }
+            catch (Exception ex)
+            {
+                Log(ex.Message);
+            }
         }
 
         private void TerminalForm_Activated(object sender, EventArgs e)
         {
-            if (!serialPort1.IsOpen)
+            try
             {
-                serialPort1.PortName = _comport;
-                serialPort1.BaudRate = _baudrate;
-                serialPort1.DtrEnable = _dtrenable;
-                serialPort1.Open();
-                SendCtrlC();
+                if (!serialPort1.IsOpen)
+                {
+                    serialPort1.PortName = _comPort;
+                    serialPort1.BaudRate = _baudRate;
+                    serialPort1.DtrEnable = _dtrEnable;
+                    serialPort1.ReadTimeout = 100;
+                    serialPort1.WriteTimeout = 100;
+                    serialPort1.Open();
+                    SendCtrlC();
+                }
+                if (!_command_has_run)
+                    timer1.Enabled = true;
             }
-            if (!_command_has_run)
-                timer1.Enabled = true;
+            catch (Exception ex)
+            {
+                Log(ex.Message);
+            }
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -58,18 +84,18 @@ namespace PyboardFileManager
 
                 if (!String.IsNullOrEmpty(_command))
                 {
-                    if (!serialPort1.IsOpen)
-                        serialPort1.Open();
-
-                    serialPort1.Write(_command);
-                    serialPort1.Write("\r");
+                    if (serialPort1.IsOpen)
+                    {
+                        serialPort1.Write(_command);
+                        serialPort1.Write("\r");
+                    }
                 }
 
                 _command_has_run = true;
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
+                Log(ex.Message);
             }
         }
 
@@ -82,19 +108,23 @@ namespace PyboardFileManager
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
+                Log(ex.Message);
             }
         }
 
         private void txtDisplay_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
-            if (e.KeyCode == Keys.Up || e.KeyCode == Keys.Down)
-                e.IsInputKey = true;
-        }
-
-        private void txtDisplay_MouseMove(object sender, MouseEventArgs e)
-        {
-            txtDisplay.SelectionLength = 0;
+            try
+            {
+                if (e.KeyCode == Keys.Up || e.KeyCode == Keys.Down || (e.Control && e.KeyCode == Keys.E) || (e.Control && e.KeyCode == Keys.C) || (e.Control && e.KeyCode == Keys.V) || (e.Shift && e.KeyCode == Keys.Insert))
+                {
+                    e.IsInputKey = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Log(ex.Message);
+            }
         }
 
         private void txtDisplay_KeyDown(object sender, KeyEventArgs e)
@@ -105,24 +135,62 @@ namespace PyboardFileManager
                 {
                     byte[] b = { 27, 91, 65 };
                     serialPort1.Write(b, 0, 3);
+                    e.Handled = true;
+                    e.SuppressKeyPress = true;
                 }
                 else if (e.KeyCode == Keys.Down)
                 {
                     byte[] b = { 27, 91, 66 };
                     serialPort1.Write(b, 0, 3);
+                    e.Handled = true;
+                    e.SuppressKeyPress = true;
                 }
                 else if (e.KeyCode == Keys.Tab)
                 {
                     serialPort1.Write("\t");
+                    e.Handled = true;
+                    e.SuppressKeyPress = true;
                 }
-                else if ((e.KeyCode == Keys.V && e.Control) || (e.KeyCode == Keys.Insert && e.Shift))
+                else if (e.Shift && e.KeyCode == Keys.Insert)
                 {
-                    serialPort1.Write(Clipboard.GetText());
+                    string pastedText = Clipboard.GetText();
+                    if (pastedText != "")
+                    {
+                        serialPort1.Write(pastedText);
+                    }
+                    e.Handled = true;
+                    e.SuppressKeyPress = true;
+                }
+                else if (e.Control && e.KeyCode == Keys.V)
+                {
+                    string pastedText = Clipboard.GetText();
+                    if (pastedText != "")
+                    {
+                        serialPort1.Write(pastedText);
+                    }
+                    e.Handled = true;
+                    e.SuppressKeyPress = true;
+                }
+                else if (e.Control && e.KeyCode == Keys.E)
+                {
+                    SendCtrlE();
+                    e.Handled = true;
+                    e.SuppressKeyPress = true;
+                }
+                else if (e.Control && e.KeyCode == Keys.C)
+                {
+                    SendCtrlC();
+                    e.Handled = true;
+                    e.SuppressKeyPress = true;
+                }
+                else
+                {
+                    //Debug.WriteLine("KEY NOT Handled");
                 }
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
+                Log(ex.Message);
             }
         }
 
@@ -139,9 +207,27 @@ namespace PyboardFileManager
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
+                Log(ex.Message);
             }
         }
+
+        private void SendCtrlE()
+        {
+            try
+            {
+                if (serialPort1.IsOpen)
+                {
+                    char[] key = new char[1];
+                    key[0] = (char)5;
+                    serialPort1.Write(key, 0, 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log(ex.Message);
+            }
+        }
+
 
         private void txtDisplay_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -154,35 +240,38 @@ namespace PyboardFileManager
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
+                Log(ex.Message);
             }
         }
 
         private void TerminalForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            serialPort1.Close();
-            SaveWindowValue();
+            try
+            {
+                SendCtrlC();
+                serialPort1.Close();
+                SaveWindowValue();
+            }
+            catch (Exception ex)
+            {
+                Log(ex.Message);
+            }
         }
 
         public void DoUpdate(object sender, System.EventArgs e)
         {
-            Debug.WriteLine("DoUpdate() Invoked");
-
             try
             {
                 if (!String.IsNullOrEmpty(_readBuffer))
                 {
                     // process a single backspace
-                    if (_readBuffer == "\b\u001b[K")
+                    if (_readBuffer == "\b\u001b[K" || _readBuffer == "\b")
                     {
-                        txtDisplay.SelectionStart = txtDisplay.Text.Length - 1;
-                        txtDisplay.SelectionLength = 1;
-                        txtDisplay.SelectedText = "";
+                        removeChar();
                     }
                     else if (_readBuffer[0] == 27 && _readBuffer[1] == 91)  // else if it begins with an escape sequence...
                     {
                         string cmd = _readBuffer.Substring(2);
-                        //MessageBox.Show(cmd);
                         int pos = cmd.IndexOf('D');
                         if (pos > 0)
                         {
@@ -190,56 +279,42 @@ namespace PyboardFileManager
                             int count = Convert.ToInt16(countstr);
                             if (count > 0)
                             {
-                                txtDisplay.SelectionStart = txtDisplay.Text.Length - count;
-                                txtDisplay.SelectionLength = count;
-                                txtDisplay.SelectedText = "";
+                                removeChar(count);
                             }
                             string remainder = cmd.Substring(pos + 1);
                             if (remainder != "")
                             {
-                                //MessageBox.Show(remainder);
-                                if (remainder == "\b\u001b[K")
+                                if (remainder == "\b\u001b[K" || remainder == "\b")
                                 {
-                                    txtDisplay.SelectionStart = txtDisplay.Text.Length - 1;
-                                    txtDisplay.SelectionLength = 1;
-                                    txtDisplay.SelectedText = "";
+                                    removeChar();
                                 }
                                 else
                                 {
                                     if (remainder[0] == 27 && remainder[1] == 91 && remainder[2] == 75)
                                     {
-                                        txtDisplay.SelectionStart = txtDisplay.Text.Length;
-                                        txtDisplay.SelectionLength = 0;
-                                        txtDisplay.SelectedText = remainder.Substring(3);
+                                        addText(remainder.Substring(3));
                                     }
                                     else
                                     {
-                                        txtDisplay.AppendText(remainder);
-                                        txtDisplay.SelectionStart = txtDisplay.Text.Length;
-                                        txtDisplay.SelectionLength = 0;
-                                        txtDisplay.ScrollToCaret();
+                                        addText(remainder);
                                     }
                                 }
                             }
                         }
                         else
                         {
-                            if (cmd == "K")
+                            if (cmd.StartsWith("K"))
                             {
-                                txtDisplay.SelectionStart = txtDisplay.Text.Length - 1;
-                                txtDisplay.SelectionLength = 1;
-                                txtDisplay.SelectedText = "";
+                                string remainder = cmd.Substring(1);
+                                addText(remainder);
                             }
                             else
-                                MessageBox.Show(cmd);
+                                Log("  cmd:" + cmd);
                         }
                     }
                     else // else it is just some text from the device
                     {
-                        txtDisplay.AppendText(_readBuffer);
-                        txtDisplay.SelectionStart = txtDisplay.Text.Length;
-                        txtDisplay.SelectionLength = 0;
-                        txtDisplay.ScrollToCaret();
+                        addText(_readBuffer);
                     }
 
                     // truncate the terminal buffer
@@ -253,9 +328,47 @@ namespace PyboardFileManager
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("DoUpdate() Error:" + ex.Message);
+                Log("  Error:" + ex.Message);
             }
         
+        }
+
+        private void addText(string buffer)
+        {
+            try
+            {
+                txtDisplay.AppendText(buffer);
+                txtDisplay.SelectionStart = txtDisplay.TextLength;
+                txtDisplay.SelectionLength = 0;
+                txtDisplay.ScrollToCaret();
+            }
+            catch (Exception ex)
+            {
+                Log(ex.Message);
+            }
+        }
+
+        private void removeChar(int count = 1)
+        {
+            try
+            {
+                txtDisplay.SelectionStart = txtDisplay.TextLength - count;
+                txtDisplay.SelectionLength = count;
+                txtDisplay.SelectedText = "";
+                txtDisplay.ScrollToCaret();
+            }
+            catch (Exception ex)
+            {
+                Log(ex.Message);
+            }
+        }
+
+        private void Log(string msg)
+        {
+            txtDisplay.AppendText(msg);
+            txtDisplay.SelectionStart = txtDisplay.TextLength;
+            txtDisplay.SelectionLength = 0;
+            txtDisplay.ScrollToCaret();
         }
 
         private void GetWindowValue()

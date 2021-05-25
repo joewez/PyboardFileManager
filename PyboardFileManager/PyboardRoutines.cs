@@ -47,6 +47,7 @@ namespace PyboardFileManager
                 COMM_PORT = "COM" + COMM_PORT;
 
             DTR_ENABLED = Utils.DecodeBoolean("DTREnable");
+
             if (!String.IsNullOrEmpty(COMM_PORT))
             {
                 bool found = false;
@@ -60,30 +61,19 @@ namespace PyboardFileManager
                 }
                 if (!found)
                 {
-                    SelectComForm s = new SelectComForm();
-                    ((ComboBox)s.Controls["cboPorts"]).Items.Clear();
-                    foreach (string port in goodPorts.OrderBy(g => Convert.ToInt32(g.Substring(3))).ToArray())
-                        ((ComboBox)s.Controls["cboPorts"]).Items.Add(port);
-                    s.ShowDialog();
-                    COMM_PORT = s.SELECTED_COMM_PORT;
-                    DTR_ENABLED = s.DTR_ENABLED;
-                    s.Dispose();
+                    GetComPort(goodPorts);
                 }
             }
             else
             {
                 if (goodPorts.Count() == 1)
-                    COMM_PORT = goodPorts[0];
+                { 
+                    //COMM_PORT = goodPorts[0];
+                    GetComPort(goodPorts);
+                }
                 else
                 {
-                    SelectComForm s = new SelectComForm();
-                    ((ComboBox)s.Controls["cboPorts"]).Items.Clear();
-                    foreach (string port in goodPorts.OrderBy(g => Convert.ToInt32(g.Substring(3))).ToArray())
-                        ((ComboBox)s.Controls["cboPorts"]).Items.Add(port);
-                    s.ShowDialog();
-                    COMM_PORT = s.SELECTED_COMM_PORT;
-                    DTR_ENABLED = s.DTR_ENABLED;
-                    s.Dispose();
+                    GetComPort(goodPorts);
                 }
             }
 
@@ -105,6 +95,20 @@ namespace PyboardFileManager
             string pythonexestr = ConfigurationManager.AppSettings["PythonExe"];
             if (pythonexestr != "")
                 _python_exe = pythonexestr;
+        }
+
+        private void GetComPort(List<string> ports)
+        {
+            SelectComForm s = new SelectComForm();
+            ((ComboBox)s.Controls["cboPorts"]).Items.Clear();
+            foreach (string port in ports.OrderBy(g => Convert.ToInt32(g.Substring(3))).ToArray())
+                ((ComboBox)s.Controls["cboPorts"]).Items.Add(port);
+            if (((ComboBox)s.Controls["cboPorts"]).Items.Count == 1)
+                ((ComboBox)s.Controls["cboPorts"]).SelectedIndex = 0;
+            s.ShowDialog();
+            COMM_PORT = s.SELECTED_COMM_PORT;
+            DTR_ENABLED = s.DTR_ENABLED;
+            s.Dispose();
         }
 
         public List<string> GetDir(string path, string LB, string RB)
