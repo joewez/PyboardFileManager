@@ -1,7 +1,12 @@
 # Pyboard File Manager
 Windows GUI for Pyboard.py Compatible Devices
 
-<i>Note: This project is not associated in anyway with the Pyboard hardware project or the MicroPython organization.</i>
+<p align="center">
+  <i>Note: This project is not associated in anyway with the Pyboard hardware project or the MicroPython organization.</i>
+</p>
+<p align="center">
+  <i>BTW: Thanks Damien!</i>
+</p>
 
 <p align="center">
   <img src="https://github.com/joewez/PyboardFileManager/blob/main/pybfm.jpg" alt="Screenshot"/>
