@@ -175,6 +175,30 @@ namespace PyboardFileManager
             p.WaitForExit();
         }
 
+        public string pyboardModules()
+        {
+            Process p = new Process();
+            p.StartInfo.UseShellExecute = false;
+            p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            p.StartInfo.CreateNoWindow = true;
+            p.StartInfo.RedirectStandardOutput = true;
+            p.StartInfo.RedirectStandardError = true;
+            p.StartInfo.WorkingDirectory = Application.StartupPath;
+            p.StartInfo.FileName = _python_exe;
+            p.StartInfo.Arguments = _command_prefix + "-c \"help('modules')\"";
+            p.Start();
+            string errors = p.StandardError.ReadToEnd();
+            string output = p.StandardOutput.ReadToEnd();
+            p.WaitForExit();
+
+            output = output.Replace("\r\n", " ");
+            output = output.Replace("  ", " ");
+            while (output.IndexOf("  ") > -1)
+                output = output.Replace("  ", " ");
+            output = output.Replace("Plus any modules on the filesystem", "");
+            return output;
+        }
+
         public void GetFile(string pybfile, string localfile)
         {
             pyboardExecute("-f cp :" + pybfile + " \"" + localfile + "\"");

@@ -1,5 +1,6 @@
 ﻿using PyboardFileManager.Properties;
 using ScintillaNET;
+using ScintillaNET_FindReplaceDialog;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -28,11 +29,18 @@ namespace PyboardFileManager
         private string _CurrentPath = "";
         private string _CurrentFile = string.Empty;
 
+        private string _micropython_keywords = string.Empty;
+        private string _micropython_modules = string.Empty;
+
+        private FindReplace _FindReplace = null;
+
         public frmMain(PyboardRoutines PYB)
         {
             _PYB = PYB;
 
             InitializeComponent();
+
+            this.AllowDrop = true;
         }
 
         #region Event Handlers
@@ -101,7 +109,21 @@ namespace PyboardFileManager
             lstDirectory.BackColor = Utils.DecodeColor("ExplorerColor");
             lstDirectory.Font = new Font(ConfigurationManager.AppSettings["DirectoryFont"], Convert.ToSingle(ConfigurationManager.AppSettings["DirectoryFontSize"]), FontStyle.Regular);
 
-            ConfigureForPython(scintilla1);
+            _micropython_keywords = ConfigurationManager.AppSettings["Python.Keywords"];
+            string[] mk = _micropython_keywords.Split(' ');
+            Array.Sort(mk);
+            string smk = string.Empty;
+            foreach (string k in mk)
+                smk += " " + k;
+            _micropython_keywords = smk.Trim();
+
+            string modules = _PYB.pyboardModules();
+            string[] mm = modules.Split(' ');
+            Array.Sort(mm);
+            string smm = string.Empty;
+            foreach (string m in mm)
+                smm += " " + m;
+            _micropython_modules = smm.Trim();
 
             RefreshFileList();
 
@@ -301,18 +323,8 @@ namespace PyboardFileManager
 
         private void btnReplaceAll_Click(object sender, EventArgs e)
         {
-            ReplaceAllForm replaceAll = new ReplaceAllForm();
-            if (replaceAll.ShowDialog() == DialogResult.OK)
-            {
-                string FindText = Decode(((TextBox)replaceAll.Controls["txtFind"]).Text);
-                string ReplaceText = Decode(((TextBox)replaceAll.Controls["txtReplace"]).Text);
-
-                if (FindText != "")
-                {
-                    scintilla1.Text = scintilla1.Text.Replace(FindText, ReplaceText);
-                    MessageBox.Show("Done.", "Global Search And Replace");
-                }
-            }
+            _FindReplace = new FindReplace(scintilla1);
+            _FindReplace.ShowReplace();
         }
 
         private void btnSaveAs_Click(object sender, EventArgs e)
@@ -451,6 +463,32 @@ namespace PyboardFileManager
             }
         }
 
+        private void btnFind_Click(object sender, EventArgs e)
+        {
+            _FindReplace = new FindReplace(scintilla1);
+            _FindReplace.ShowFind();
+        }
+
+        private void frmMain_DragDrop(object sender, DragEventArgs e)
+        {
+            Cursor.Current = Cursors.WaitCursor;
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            foreach (string file in files)
+            {
+                string newFilename = Path.GetFileName(file);
+                string FileToAdd = (_CurrentPath == "") ? newFilename : _CurrentPath + "/" + newFilename;
+                _PYB.PutFile(file, FileToAdd);
+            }
+            Cursor.Current = Cursors.Default;
+            RefreshFileList();
+        }
+
+        private void frmMain_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.Copy;
+        }
+
+
         #endregion
 
         #region Helper Routines
@@ -572,6 +610,19 @@ namespace PyboardFileManager
                             scintilla1.EmptyUndoBuffer();
                             lblCurrentFile.Text = GetFileOnly(_CurrentFile);
                             lblCurrentFile.ForeColor = Color.Black;
+
+                            if (LocalFile.ToLower().Trim().EndsWith(".html") || LocalFile.ToLower().Trim().EndsWith(".xml"))
+                            {
+                                ConfigureForHTML(scintilla1);
+                            } 
+                            else if (LocalFile.ToLower().Trim().EndsWith("py"))
+                            {
+                                ConfigureForPython(scintilla1, _micropython_keywords, _micropython_modules);
+                            }
+                            else
+                            {
+                                ConfigureForText(scintilla1);
+                            }
                         }
                     }
                     else
@@ -707,10 +758,13 @@ namespace PyboardFileManager
         private void ResetNew()
         {
             scintilla1.Text = "";
+            
             _CurrentFile = NEW_FILENAME;
             _FileDirty = false;
             lblCurrentFile.Text = _CurrentFile;
             lblCurrentFile.ForeColor = Color.Black;
+
+            ConfigureForPython(scintilla1, _micropython_keywords, _micropython_modules);
         }
 
         private void OpenREPL(string cmd)
@@ -760,7 +814,122 @@ namespace PyboardFileManager
             }
         }
 
-        private void ConfigureForPython(Scintilla scintilla)
+        private void ConfigureForText(Scintilla scintilla)
+        {
+            // Reset the styles
+            scintilla.StyleResetDefault();
+            string EditorFont = ConfigurationManager.AppSettings["EditorFont"];
+            if (!String.IsNullOrEmpty(EditorFont))
+                scintilla.Styles[Style.Default].Font = EditorFont;
+            else
+                scintilla.Styles[Style.Default].Font = "Consolas";
+            string EditorFontSize = ConfigurationManager.AppSettings["EditorFontSize"];
+            if (!String.IsNullOrEmpty(EditorFontSize))
+                scintilla.Styles[Style.Default].Size = Convert.ToInt32(EditorFontSize);
+            else
+                scintilla.Styles[Style.Default].Size = 10;
+            scintilla.StyleClearAll(); // i.e. Apply to all
+
+            // Set the lexer
+            scintilla.Lexer = Lexer.Null;
+
+            // Some properties we like
+            scintilla.SetProperty("tab.timmy.whinge.level", "1");
+            scintilla.SetProperty("fold", "1");
+
+            scintilla1.Margins[0].Width = 35;
+            scintilla1.Margins[0].Type = MarginType.Number;
+
+            // Use margin 2 for fold markers
+            scintilla.Margins[2].Type = MarginType.Symbol;
+            scintilla.Margins[2].Mask = Marker.MaskFolders;
+            scintilla.Margins[2].Sensitive = true;
+            scintilla.Margins[2].Width = 30;
+
+            // Reset folder markers
+            for (int i = Marker.FolderEnd; i <= Marker.FolderOpen; i++)
+            {
+                scintilla.Markers[i].SetForeColor(SystemColors.ControlLightLight);
+                scintilla.Markers[i].SetBackColor(SystemColors.ControlDark);
+            }
+
+            // Style the folder markers
+            scintilla.Markers[Marker.Folder].Symbol = MarkerSymbol.BoxPlus;
+            scintilla.Markers[Marker.Folder].SetBackColor(SystemColors.ControlText);
+            scintilla.Markers[Marker.FolderOpen].Symbol = MarkerSymbol.BoxMinus;
+            scintilla.Markers[Marker.FolderEnd].Symbol = MarkerSymbol.BoxPlusConnected;
+            scintilla.Markers[Marker.FolderEnd].SetBackColor(SystemColors.ControlText);
+            scintilla.Markers[Marker.FolderMidTail].Symbol = MarkerSymbol.TCorner;
+            scintilla.Markers[Marker.FolderOpenMid].Symbol = MarkerSymbol.BoxMinusConnected;
+            scintilla.Markers[Marker.FolderSub].Symbol = MarkerSymbol.VLine;
+            scintilla.Markers[Marker.FolderTail].Symbol = MarkerSymbol.LCorner;
+
+            // Enable automatic folding
+            scintilla.AutomaticFold = (AutomaticFold.Show | AutomaticFold.Click | AutomaticFold.Change);
+        }
+
+        private void ConfigureForHTML(Scintilla scintilla)
+        {
+            // Reset the styles
+            scintilla.StyleResetDefault();
+            scintilla.Styles[Style.Default].Font = "Consolas";
+            scintilla.Styles[Style.Default].Size = 10;
+            scintilla.StyleClearAll();
+
+            // Set the XML Lexer
+            scintilla.Lexer = Lexer.Xml;
+
+            // Show line numbers
+            scintilla.Margins[0].Width = 20;
+
+            // Enable folding
+            scintilla.SetProperty("fold", "1");
+            scintilla.SetProperty("fold.compact", "1");
+            scintilla.SetProperty("fold.html", "1");
+
+            // Use Margin 2 for fold markers
+            scintilla.Margins[2].Type = MarginType.Symbol;
+            scintilla.Margins[2].Mask = Marker.MaskFolders;
+            scintilla.Margins[2].Sensitive = true;
+            scintilla.Margins[2].Width = 20;
+
+            // Reset folder markers
+            for (int i = Marker.FolderEnd; i <= Marker.FolderOpen; i++)
+            {
+                scintilla.Markers[i].SetForeColor(SystemColors.ControlLightLight);
+                scintilla.Markers[i].SetBackColor(SystemColors.ControlDark);
+            }
+
+            // Style the folder markers
+            scintilla.Markers[Marker.Folder].Symbol = MarkerSymbol.BoxPlus;
+            scintilla.Markers[Marker.Folder].SetBackColor(SystemColors.ControlText);
+            scintilla.Markers[Marker.FolderOpen].Symbol = MarkerSymbol.BoxMinus;
+            scintilla.Markers[Marker.FolderEnd].Symbol = MarkerSymbol.BoxPlusConnected;
+            scintilla.Markers[Marker.FolderEnd].SetBackColor(SystemColors.ControlText);
+            scintilla.Markers[Marker.FolderMidTail].Symbol = MarkerSymbol.TCorner;
+            scintilla.Markers[Marker.FolderOpenMid].Symbol = MarkerSymbol.BoxMinusConnected;
+            scintilla.Markers[Marker.FolderSub].Symbol = MarkerSymbol.VLine;
+            scintilla.Markers[Marker.FolderTail].Symbol = MarkerSymbol.LCorner;
+
+            // Enable automatic folding
+            scintilla.AutomaticFold = AutomaticFold.Show | AutomaticFold.Click | AutomaticFold.Change;
+
+            // Set the Styles
+            scintilla.StyleResetDefault();
+            // I like fixed font for XML
+            scintilla.Styles[Style.Default].Font = "Courier";
+            scintilla.Styles[Style.Default].Size = 10;
+            scintilla.StyleClearAll();
+            scintilla.Styles[Style.Xml.Attribute].ForeColor = Color.Red;
+            scintilla.Styles[Style.Xml.Entity].ForeColor = Color.Red;
+            scintilla.Styles[Style.Xml.Comment].ForeColor = Color.Green;
+            scintilla.Styles[Style.Xml.Tag].ForeColor = Color.Blue;
+            scintilla.Styles[Style.Xml.TagEnd].ForeColor = Color.Blue;
+            scintilla.Styles[Style.Xml.DoubleString].ForeColor = Color.DeepPink;
+            scintilla.Styles[Style.Xml.SingleString].ForeColor = Color.DeepPink;
+        }
+
+        private void ConfigureForPython(Scintilla scintilla, string keywords, string modules)
         {
             // Reset the styles
             scintilla.StyleResetDefault();
@@ -794,14 +963,14 @@ namespace PyboardFileManager
             scintilla.SetProperty("tab.timmy.whinge.level", "1");
             scintilla.SetProperty("fold", "1");
 
-            scintilla1.Margins[0].Width = 25;
+            scintilla1.Margins[0].Width = 35;
             scintilla1.Margins[0].Type = MarginType.Number;
 
             // Use margin 2 for fold markers
             scintilla.Margins[2].Type = MarginType.Symbol;
             scintilla.Margins[2].Mask = Marker.MaskFolders;
             scintilla.Margins[2].Sensitive = true;
-            scintilla.Margins[2].Width = 20;
+            scintilla.Margins[2].Width = 30;
 
             // Reset folder markers
             for (int i = Marker.FolderEnd; i <= Marker.FolderOpen; i++)
@@ -857,12 +1026,8 @@ namespace PyboardFileManager
             // 0 "Keywords",
             // 1 "Highlighted identifiers"
 
-            //var python2 = "and as assert break class continue def del elif else except exec finally for from global if import in is lambda not or pass print raise return try while with yield";
-            //var python3 = "False None True and as assert break class continue def del elif else except finally for from global if import in is lambda nonlocal not or pass raise return try while with yield";
-            var micropython = ConfigurationManager.AppSettings["Python.Keywords"];
-
-            scintilla.SetKeywords(0, micropython);
-            // scintilla.SetKeywords(1, "add your own keywords here");
+            scintilla.SetKeywords(0, keywords);
+            scintilla.SetKeywords(1, modules);
         }
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]

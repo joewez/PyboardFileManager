@@ -74,6 +74,7 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.tmrMessage = new System.Windows.Forms.Timer(this.components);
+            this.btnFind = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.mainSplitter)).BeginInit();
             this.mainSplitter.Panel1.SuspendLayout();
             this.mainSplitter.Panel2.SuspendLayout();
@@ -426,6 +427,7 @@
             // 
             this.pnlEditToolbar.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.pnlEditToolbar.BackColor = System.Drawing.SystemColors.Control;
+            this.pnlEditToolbar.Controls.Add(this.btnFind);
             this.pnlEditToolbar.Controls.Add(this.label2);
             this.pnlEditToolbar.Controls.Add(this.cboHelp);
             this.pnlEditToolbar.Controls.Add(this.btnEditRedo);
@@ -445,7 +447,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(217, 13);
+            this.label2.Location = new System.Drawing.Point(203, 13);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(32, 13);
             this.label2.TabIndex = 32;
@@ -454,7 +456,7 @@
             // cboHelp
             // 
             this.cboHelp.FormattingEnabled = true;
-            this.cboHelp.Location = new System.Drawing.Point(251, 10);
+            this.cboHelp.Location = new System.Drawing.Point(237, 10);
             this.cboHelp.Name = "cboHelp";
             this.cboHelp.Size = new System.Drawing.Size(164, 21);
             this.cboHelp.TabIndex = 13;
@@ -522,20 +524,20 @@
             // 
             // btnReplaceAll
             // 
-            this.btnReplaceAll.Location = new System.Drawing.Point(436, 6);
+            this.btnReplaceAll.Location = new System.Drawing.Point(448, 6);
             this.btnReplaceAll.Name = "btnReplaceAll";
-            this.btnReplaceAll.Size = new System.Drawing.Size(68, 27);
-            this.btnReplaceAll.TabIndex = 20;
+            this.btnReplaceAll.Size = new System.Drawing.Size(58, 27);
+            this.btnReplaceAll.TabIndex = 21;
             this.btnReplaceAll.Text = "Replace";
             this.btnReplaceAll.UseVisualStyleBackColor = false;
             this.btnReplaceAll.Click += new System.EventHandler(this.btnReplaceAll_Click);
             // 
             // btnSaveAs
             // 
-            this.btnSaveAs.Location = new System.Drawing.Point(504, 6);
+            this.btnSaveAs.Location = new System.Drawing.Point(530, 6);
             this.btnSaveAs.Name = "btnSaveAs";
             this.btnSaveAs.Size = new System.Drawing.Size(70, 27);
-            this.btnSaveAs.TabIndex = 21;
+            this.btnSaveAs.TabIndex = 22;
             this.btnSaveAs.Text = "Save As...";
             this.btnSaveAs.UseVisualStyleBackColor = false;
             this.btnSaveAs.Click += new System.EventHandler(this.btnSaveAs_Click);
@@ -544,10 +546,10 @@
             // 
             this.btnSave.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSave.Location = new System.Drawing.Point(576, 6);
+            this.btnSave.Location = new System.Drawing.Point(601, 6);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(70, 27);
-            this.btnSave.TabIndex = 22;
+            this.btnSave.Size = new System.Drawing.Size(54, 27);
+            this.btnSave.TabIndex = 23;
             this.btnSave.Text = "&Save";
             this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
@@ -588,6 +590,16 @@
             this.tmrMessage.Interval = 800;
             this.tmrMessage.Tick += new System.EventHandler(this.tmrMessage_Tick);
             // 
+            // btnFind
+            // 
+            this.btnFind.Location = new System.Drawing.Point(407, 6);
+            this.btnFind.Name = "btnFind";
+            this.btnFind.Size = new System.Drawing.Size(38, 27);
+            this.btnFind.TabIndex = 20;
+            this.btnFind.Text = "Find";
+            this.btnFind.UseVisualStyleBackColor = false;
+            this.btnFind.Click += new System.EventHandler(this.btnFind_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -599,6 +611,8 @@
             this.Text = "Pyboard File Manager";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
             this.Load += new System.EventHandler(this.frmMain_Load);
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.frmMain_DragDrop);
+            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.frmMain_DragEnter);
             this.mainSplitter.Panel1.ResumeLayout(false);
             this.mainSplitter.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.mainSplitter)).EndInit();
@@ -663,5 +677,6 @@
         private System.Windows.Forms.ListBox lstDirectory;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel pnlCommands;
+        private System.Windows.Forms.Button btnFind;
     }
 }

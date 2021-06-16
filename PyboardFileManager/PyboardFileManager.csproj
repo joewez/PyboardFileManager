@@ -56,6 +56,9 @@
     <Reference Include="ScintillaNET, Version=3.6.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\jacobslusser.ScintillaNET.3.6.3\lib\net40\ScintillaNET.dll</HintPath>
     </Reference>
+    <Reference Include="ScintillaNET_FindReplaceDialog, Version=1.0.3.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ScintillaNET_FindReplaceDialog.1.0.3.3\lib\net40-client\ScintillaNET_FindReplaceDialog.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
@@ -74,12 +77,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FindForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FindForm.Designer.cs">
-      <DependentUpon>FindForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="HelpForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -95,12 +92,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PyboardRoutines.cs" />
-    <Compile Include="ReplaceAllForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ReplaceAllForm.Designer.cs">
-      <DependentUpon>ReplaceAllForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="SelectComForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -115,9 +106,6 @@
       <DependentUpon>TerminalForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Utils.cs" />
-    <EmbeddedResource Include="FindForm.resx">
-      <DependentUpon>FindForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="HelpForm.resx">
       <DependentUpon>HelpForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -134,9 +122,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="ReplaceAllForm.resx">
-      <DependentUpon>ReplaceAllForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="SelectComForm.resx">
       <DependentUpon>SelectComForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -183,6 +168,12 @@
     <Content Include="pyboard.py">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\Clock.ico" />
+    <Content Include="Resources\Clock.png" />
+    <Content Include="Resources\DownButton.png" />
+    <Content Include="Resources\Highlighter.png" />
+    <Content Include="Resources\UpButton.png" />
+    <Content Include="Resources\XToCloseButton.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6">
