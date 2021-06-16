@@ -2,7 +2,7 @@
 Windows GUI for Pyboard.py Compatible Devices
 
 <p align="center">
-  <i>Note: This project is not associated in anyway with the Pyboard hardware project or the MicroPython organization.</i>
+  <i>Note: This project is not associated in any way with the Pyboard hardware project or the MicroPython organization.</i>
 </p>
 <p align="center">
   <i>BTW: Thanks Damien!</i>
@@ -101,7 +101,8 @@ All the features are pretty self-explanatory, but here is just a short descripti
   - Color settings may be a WebColor name or a 3 value, comma-separated list of the RGB values to use
   - <b><i>CommPortExclusions</i></b> should be just the numbers seperated by commas
 - The editor now supports syntax highlighting for html/xml documents
-- The editor now supports the Dragging and Dropping of multiple files from Windows Explorer.
+- The editor now supports the Dragging and Dropping of multiple files from Windows Explorer. Just be sure to drop your
+  file or files onto the directory list on the main window.
 
 
 <b>CAVEATS:</b>
