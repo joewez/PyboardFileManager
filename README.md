@@ -67,7 +67,8 @@ All the features are pretty self-explanatory, but here is just a short descripti
   
 - Editing Commands
   - <b>Undo/Redo/Cut/Copy/Paste/Delete</b> standard editing commands
-  - <b>Replace All</b> will do a simple search and replace on the current file being edited
+  - <b>Find</b> will do a simple search on the current file being edited
+  - <b>Replace</b> will do a simple search and replace on the current file being edited
   - <b>Save As</b> will save the current file to the device using the name you give it in the <i>current</i> directory
   - <b>Save</b> will save the current file to the device
 
@@ -121,5 +122,4 @@ All the features are pretty self-explanatory, but here is just a short descripti
 
 <b>ROADMAP:</b>
 
-- Syntax highlighting for other text file types (html, xml, etc,,,)
 - Proper Options/Configuration editing window.
