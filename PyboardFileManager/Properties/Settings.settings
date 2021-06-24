@@ -5,17 +5,8 @@
     <Setting Name="HelpTop" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">50</Value>
     </Setting>
-    <Setting Name="SplitterWidth" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">240</Value>
-    </Setting>
     <Setting Name="Setting" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
-    </Setting>
-    <Setting Name="WindowHeight" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">800</Value>
-    </Setting>
-    <Setting Name="WindowWidth" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">1400</Value>
     </Setting>
     <Setting Name="WindowTop" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">150</Value>
@@ -23,26 +14,35 @@
     <Setting Name="WindowLeft" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">150</Value>
     </Setting>
-    <Setting Name="REPLHeight" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">1400</Value>
-    </Setting>
-    <Setting Name="REPLWidth" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">1500</Value>
-    </Setting>
     <Setting Name="REPLTop" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">160</Value>
     </Setting>
     <Setting Name="REPLLeft" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">160</Value>
     </Setting>
-    <Setting Name="HelpHeight" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">1500</Value>
-    </Setting>
-    <Setting Name="HelpWidth" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">1600</Value>
-    </Setting>
     <Setting Name="HelpLeft" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">150</Value>
+    </Setting>
+    <Setting Name="SplitterWidth" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">300</Value>
+    </Setting>
+    <Setting Name="WindowHeight" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">600</Value>
+    </Setting>
+    <Setting Name="WindowWidth" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1000</Value>
+    </Setting>
+    <Setting Name="REPLHeight" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">500</Value>
+    </Setting>
+    <Setting Name="REPLWidth" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">800</Value>
+    </Setting>
+    <Setting Name="HelpHeight" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">500</Value>
+    </Setting>
+    <Setting Name="HelpWidth" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">800</Value>
     </Setting>
   </Settings>
 </SettingsFile>
