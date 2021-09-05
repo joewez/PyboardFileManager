@@ -51,12 +51,14 @@
             this.lblFolderCount = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.pnlCommands = new System.Windows.Forms.Panel();
+            this.btnView = new System.Windows.Forms.Button();
             this.label11 = new System.Windows.Forms.Label();
             this.pnlSaveMessage = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
             this.scintilla1 = new ScintillaNET.Scintilla();
             this.pnlFileStatus = new System.Windows.Forms.Panel();
             this.pnlEditToolbar = new System.Windows.Forms.Panel();
+            this.btnFind = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.cboHelp = new System.Windows.Forms.ComboBox();
             this.btnEditRedo = new System.Windows.Forms.Button();
@@ -74,7 +76,6 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.tmrMessage = new System.Windows.Forms.Timer(this.components);
-            this.btnFind = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.mainSplitter)).BeginInit();
             this.mainSplitter.Panel1.SuspendLayout();
             this.mainSplitter.Panel2.SuspendLayout();
@@ -95,7 +96,7 @@
             this.btnREPL.ForeColor = System.Drawing.Color.Black;
             this.btnREPL.Image = ((System.Drawing.Image)(resources.GetObject("btnREPL.Image")));
             this.btnREPL.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnREPL.Location = new System.Drawing.Point(3, 353);
+            this.btnREPL.Location = new System.Drawing.Point(3, 388);
             this.btnREPL.Name = "btnREPL";
             this.btnREPL.Padding = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.btnREPL.Size = new System.Drawing.Size(73, 31);
@@ -109,7 +110,7 @@
             // 
             this.btnExport.Image = ((System.Drawing.Image)(resources.GetObject("btnExport.Image")));
             this.btnExport.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnExport.Location = new System.Drawing.Point(3, 138);
+            this.btnExport.Location = new System.Drawing.Point(3, 176);
             this.btnExport.Name = "btnExport";
             this.btnExport.Padding = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.btnExport.Size = new System.Drawing.Size(73, 30);
@@ -123,7 +124,7 @@
             // 
             this.btnMove.Image = ((System.Drawing.Image)(resources.GetObject("btnMove.Image")));
             this.btnMove.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnMove.Location = new System.Drawing.Point(3, 206);
+            this.btnMove.Location = new System.Drawing.Point(3, 244);
             this.btnMove.Name = "btnMove";
             this.btnMove.Padding = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.btnMove.Size = new System.Drawing.Size(73, 30);
@@ -137,11 +138,11 @@
             // 
             this.btnRun.Image = ((System.Drawing.Image)(resources.GetObject("btnRun.Image")));
             this.btnRun.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnRun.Location = new System.Drawing.Point(3, 307);
+            this.btnRun.Location = new System.Drawing.Point(3, 312);
             this.btnRun.Name = "btnRun";
             this.btnRun.Padding = new System.Windows.Forms.Padding(8, 0, 6, 0);
             this.btnRun.Size = new System.Drawing.Size(73, 30);
-            this.btnRun.TabIndex = 9;
+            this.btnRun.TabIndex = 8;
             this.btnRun.Text = "Run";
             this.btnRun.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnRun.UseVisualStyleBackColor = true;
@@ -151,11 +152,11 @@
             // 
             this.btnRefresh.Image = ((System.Drawing.Image)(resources.GetObject("btnRefresh.Image")));
             this.btnRefresh.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnRefresh.Location = new System.Drawing.Point(3, 273);
+            this.btnRefresh.Location = new System.Drawing.Point(3, 34);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Padding = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.btnRefresh.Size = new System.Drawing.Size(73, 30);
-            this.btnRefresh.TabIndex = 8;
+            this.btnRefresh.TabIndex = 0;
             this.btnRefresh.Text = "Refresh";
             this.btnRefresh.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnRefresh.UseVisualStyleBackColor = true;
@@ -165,7 +166,7 @@
             // 
             this.btnMkdir.Image = ((System.Drawing.Image)(resources.GetObject("btnMkdir.Image")));
             this.btnMkdir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnMkdir.Location = new System.Drawing.Point(3, 239);
+            this.btnMkdir.Location = new System.Drawing.Point(3, 278);
             this.btnMkdir.Name = "btnMkdir";
             this.btnMkdir.Padding = new System.Windows.Forms.Padding(8, 0, 2, 0);
             this.btnMkdir.Size = new System.Drawing.Size(73, 30);
@@ -179,7 +180,7 @@
             // 
             this.btnLoad.Image = ((System.Drawing.Image)(resources.GetObject("btnLoad.Image")));
             this.btnLoad.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnLoad.Location = new System.Drawing.Point(3, 104);
+            this.btnLoad.Location = new System.Drawing.Point(3, 142);
             this.btnLoad.Name = "btnLoad";
             this.btnLoad.Padding = new System.Windows.Forms.Padding(4, 0, 3, 0);
             this.btnLoad.Size = new System.Drawing.Size(73, 30);
@@ -193,7 +194,7 @@
             // 
             this.btnNew.Image = ((System.Drawing.Image)(resources.GetObject("btnNew.Image")));
             this.btnNew.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnNew.Location = new System.Drawing.Point(3, 36);
+            this.btnNew.Location = new System.Drawing.Point(3, 74);
             this.btnNew.Name = "btnNew";
             this.btnNew.Padding = new System.Windows.Forms.Padding(6, 0, 2, 0);
             this.btnNew.Size = new System.Drawing.Size(73, 30);
@@ -207,7 +208,7 @@
             // 
             this.btnDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnDelete.Image")));
             this.btnDelete.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnDelete.Location = new System.Drawing.Point(3, 172);
+            this.btnDelete.Location = new System.Drawing.Point(3, 210);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Padding = new System.Windows.Forms.Padding(4, 0, 2, 0);
             this.btnDelete.Size = new System.Drawing.Size(73, 30);
@@ -221,7 +222,7 @@
             // 
             this.btnOpen.Image = ((System.Drawing.Image)(resources.GetObject("btnOpen.Image")));
             this.btnOpen.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnOpen.Location = new System.Drawing.Point(3, 70);
+            this.btnOpen.Location = new System.Drawing.Point(3, 108);
             this.btnOpen.Name = "btnOpen";
             this.btnOpen.Padding = new System.Windows.Forms.Padding(6, 0, 4, 0);
             this.btnOpen.Size = new System.Drawing.Size(73, 30);
@@ -275,7 +276,7 @@
             this.lstDirectory.ItemHeight = 21;
             this.lstDirectory.Location = new System.Drawing.Point(0, 31);
             this.lstDirectory.Name = "lstDirectory";
-            this.lstDirectory.Size = new System.Drawing.Size(265, 569);
+            this.lstDirectory.Size = new System.Drawing.Size(265, 563);
             this.lstDirectory.TabIndex = 18;
             this.lstDirectory.DoubleClick += new System.EventHandler(this.lstDirectory_DoubleClick);
             // 
@@ -308,25 +309,25 @@
             this.panel4.Controls.Add(this.lblFolderCount);
             this.panel4.Controls.Add(this.label9);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel4.Location = new System.Drawing.Point(0, 600);
+            this.panel4.Location = new System.Drawing.Point(0, 594);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(265, 34);
+            this.panel4.Size = new System.Drawing.Size(265, 40);
             this.panel4.TabIndex = 17;
             // 
             // lblFileCount
             // 
             this.lblFileCount.AutoSize = true;
-            this.lblFileCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFileCount.Location = new System.Drawing.Point(136, 8);
+            this.lblFileCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblFileCount.Location = new System.Drawing.Point(136, 12);
             this.lblFileCount.Name = "lblFileCount";
-            this.lblFileCount.Size = new System.Drawing.Size(31, 15);
+            this.lblFileCount.Size = new System.Drawing.Size(32, 16);
             this.lblFileCount.TabIndex = 3;
             this.lblFileCount.Text = "999";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(104, 10);
+            this.label7.Location = new System.Drawing.Point(104, 14);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(31, 13);
             this.label7.TabIndex = 2;
@@ -335,17 +336,17 @@
             // lblFolderCount
             // 
             this.lblFolderCount.AutoSize = true;
-            this.lblFolderCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFolderCount.Location = new System.Drawing.Point(67, 8);
+            this.lblFolderCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblFolderCount.Location = new System.Drawing.Point(67, 12);
             this.lblFolderCount.Name = "lblFolderCount";
-            this.lblFolderCount.Size = new System.Drawing.Size(31, 15);
+            this.lblFolderCount.Size = new System.Drawing.Size(32, 16);
             this.lblFolderCount.TabIndex = 1;
             this.lblFolderCount.Text = "999";
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(4, 10);
+            this.label9.Location = new System.Drawing.Point(4, 14);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(66, 13);
             this.label9.TabIndex = 0;
@@ -353,6 +354,7 @@
             // 
             // pnlCommands
             // 
+            this.pnlCommands.Controls.Add(this.btnView);
             this.pnlCommands.Controls.Add(this.btnREPL);
             this.pnlCommands.Controls.Add(this.label11);
             this.pnlCommands.Controls.Add(this.btnNew);
@@ -369,6 +371,20 @@
             this.pnlCommands.Name = "pnlCommands";
             this.pnlCommands.Size = new System.Drawing.Size(79, 634);
             this.pnlCommands.TabIndex = 20;
+            // 
+            // btnView
+            // 
+            this.btnView.Image = ((System.Drawing.Image)(resources.GetObject("btnView.Image")));
+            this.btnView.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnView.Location = new System.Drawing.Point(3, 347);
+            this.btnView.Name = "btnView";
+            this.btnView.Padding = new System.Windows.Forms.Padding(8, 0, 6, 0);
+            this.btnView.Size = new System.Drawing.Size(73, 30);
+            this.btnView.TabIndex = 9;
+            this.btnView.Text = "View";
+            this.btnView.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnView.UseVisualStyleBackColor = true;
+            this.btnView.Click += new System.EventHandler(this.btnView_Click);
             // 
             // label11
             // 
@@ -407,7 +423,7 @@
             this.scintilla1.Lexer = ScintillaNET.Lexer.Python;
             this.scintilla1.Location = new System.Drawing.Point(3, 34);
             this.scintilla1.Name = "scintilla1";
-            this.scintilla1.Size = new System.Drawing.Size(692, 569);
+            this.scintilla1.Size = new System.Drawing.Size(692, 563);
             this.scintilla1.TabIndex = 12;
             this.scintilla1.TextChanged += new System.EventHandler(this.scintilla1_TextChanged);
             // 
@@ -417,9 +433,9 @@
             this.pnlFileStatus.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pnlFileStatus.Controls.Add(this.pnlEditToolbar);
             this.pnlFileStatus.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlFileStatus.Location = new System.Drawing.Point(3, 603);
+            this.pnlFileStatus.Location = new System.Drawing.Point(3, 597);
             this.pnlFileStatus.Name = "pnlFileStatus";
-            this.pnlFileStatus.Size = new System.Drawing.Size(692, 31);
+            this.pnlFileStatus.Size = new System.Drawing.Size(692, 37);
             this.pnlFileStatus.TabIndex = 18;
             this.pnlFileStatus.Resize += new System.EventHandler(this.pnlFileStatus_Resize);
             // 
@@ -439,15 +455,25 @@
             this.pnlEditToolbar.Controls.Add(this.btnReplaceAll);
             this.pnlEditToolbar.Controls.Add(this.btnSaveAs);
             this.pnlEditToolbar.Controls.Add(this.btnSave);
-            this.pnlEditToolbar.Location = new System.Drawing.Point(13, -5);
+            this.pnlEditToolbar.Location = new System.Drawing.Point(13, -2);
             this.pnlEditToolbar.Name = "pnlEditToolbar";
             this.pnlEditToolbar.Size = new System.Drawing.Size(661, 37);
             this.pnlEditToolbar.TabIndex = 9;
             // 
+            // btnFind
+            // 
+            this.btnFind.Location = new System.Drawing.Point(407, 7);
+            this.btnFind.Name = "btnFind";
+            this.btnFind.Size = new System.Drawing.Size(55, 27);
+            this.btnFind.TabIndex = 20;
+            this.btnFind.Text = "Find";
+            this.btnFind.UseVisualStyleBackColor = false;
+            this.btnFind.Click += new System.EventHandler(this.btnFind_Click);
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(203, 13);
+            this.label2.Location = new System.Drawing.Point(11, 13);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(32, 13);
             this.label2.TabIndex = 32;
@@ -456,7 +482,7 @@
             // cboHelp
             // 
             this.cboHelp.FormattingEnabled = true;
-            this.cboHelp.Location = new System.Drawing.Point(237, 10);
+            this.cboHelp.Location = new System.Drawing.Point(45, 10);
             this.cboHelp.Name = "cboHelp";
             this.cboHelp.Size = new System.Drawing.Size(164, 21);
             this.cboHelp.TabIndex = 13;
@@ -465,7 +491,7 @@
             // btnEditRedo
             // 
             this.btnEditRedo.Image = ((System.Drawing.Image)(resources.GetObject("btnEditRedo.Image")));
-            this.btnEditRedo.Location = new System.Drawing.Point(41, 6);
+            this.btnEditRedo.Location = new System.Drawing.Point(245, 7);
             this.btnEditRedo.Name = "btnEditRedo";
             this.btnEditRedo.Size = new System.Drawing.Size(28, 27);
             this.btnEditRedo.TabIndex = 15;
@@ -475,7 +501,7 @@
             // btnEditUndo
             // 
             this.btnEditUndo.Image = ((System.Drawing.Image)(resources.GetObject("btnEditUndo.Image")));
-            this.btnEditUndo.Location = new System.Drawing.Point(12, 6);
+            this.btnEditUndo.Location = new System.Drawing.Point(216, 7);
             this.btnEditUndo.Name = "btnEditUndo";
             this.btnEditUndo.Size = new System.Drawing.Size(28, 27);
             this.btnEditUndo.TabIndex = 14;
@@ -485,7 +511,7 @@
             // btnEditDelete
             // 
             this.btnEditDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnEditDelete.Image")));
-            this.btnEditDelete.Location = new System.Drawing.Point(171, 6);
+            this.btnEditDelete.Location = new System.Drawing.Point(369, 7);
             this.btnEditDelete.Name = "btnEditDelete";
             this.btnEditDelete.Size = new System.Drawing.Size(28, 27);
             this.btnEditDelete.TabIndex = 19;
@@ -495,7 +521,7 @@
             // btnEditPaste
             // 
             this.btnEditPaste.Image = ((System.Drawing.Image)(resources.GetObject("btnEditPaste.Image")));
-            this.btnEditPaste.Location = new System.Drawing.Point(137, 6);
+            this.btnEditPaste.Location = new System.Drawing.Point(340, 7);
             this.btnEditPaste.Name = "btnEditPaste";
             this.btnEditPaste.Size = new System.Drawing.Size(28, 27);
             this.btnEditPaste.TabIndex = 18;
@@ -505,7 +531,7 @@
             // btnEditCopy
             // 
             this.btnEditCopy.Image = ((System.Drawing.Image)(resources.GetObject("btnEditCopy.Image")));
-            this.btnEditCopy.Location = new System.Drawing.Point(107, 6);
+            this.btnEditCopy.Location = new System.Drawing.Point(311, 7);
             this.btnEditCopy.Name = "btnEditCopy";
             this.btnEditCopy.Size = new System.Drawing.Size(28, 27);
             this.btnEditCopy.TabIndex = 17;
@@ -515,7 +541,7 @@
             // btnEditCut
             // 
             this.btnEditCut.Image = ((System.Drawing.Image)(resources.GetObject("btnEditCut.Image")));
-            this.btnEditCut.Location = new System.Drawing.Point(78, 6);
+            this.btnEditCut.Location = new System.Drawing.Point(282, 7);
             this.btnEditCut.Name = "btnEditCut";
             this.btnEditCut.Size = new System.Drawing.Size(28, 27);
             this.btnEditCut.TabIndex = 16;
@@ -524,7 +550,7 @@
             // 
             // btnReplaceAll
             // 
-            this.btnReplaceAll.Location = new System.Drawing.Point(448, 6);
+            this.btnReplaceAll.Location = new System.Drawing.Point(463, 7);
             this.btnReplaceAll.Name = "btnReplaceAll";
             this.btnReplaceAll.Size = new System.Drawing.Size(58, 27);
             this.btnReplaceAll.TabIndex = 21;
@@ -534,7 +560,7 @@
             // 
             // btnSaveAs
             // 
-            this.btnSaveAs.Location = new System.Drawing.Point(530, 6);
+            this.btnSaveAs.Location = new System.Drawing.Point(530, 7);
             this.btnSaveAs.Name = "btnSaveAs";
             this.btnSaveAs.Size = new System.Drawing.Size(70, 27);
             this.btnSaveAs.TabIndex = 22;
@@ -546,7 +572,7 @@
             // 
             this.btnSave.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSave.Location = new System.Drawing.Point(601, 6);
+            this.btnSave.Location = new System.Drawing.Point(601, 7);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(54, 27);
             this.btnSave.TabIndex = 23;
@@ -575,6 +601,7 @@
             this.lblCurrentFile.TabIndex = 9;
             this.lblCurrentFile.Text = "<current file>";
             this.lblCurrentFile.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblCurrentFile.Click += new System.EventHandler(this.lblCurrentFile_Click);
             // 
             // openFileDialog1
             // 
@@ -589,16 +616,6 @@
             // 
             this.tmrMessage.Interval = 800;
             this.tmrMessage.Tick += new System.EventHandler(this.tmrMessage_Tick);
-            // 
-            // btnFind
-            // 
-            this.btnFind.Location = new System.Drawing.Point(407, 6);
-            this.btnFind.Name = "btnFind";
-            this.btnFind.Size = new System.Drawing.Size(38, 27);
-            this.btnFind.TabIndex = 20;
-            this.btnFind.Text = "Find";
-            this.btnFind.UseVisualStyleBackColor = false;
-            this.btnFind.Click += new System.EventHandler(this.btnFind_Click);
             // 
             // frmMain
             // 
@@ -678,5 +695,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel pnlCommands;
         private System.Windows.Forms.Button btnFind;
+        private System.Windows.Forms.Button btnView;
     }
 }

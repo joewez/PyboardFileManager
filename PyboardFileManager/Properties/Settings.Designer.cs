@@ -190,5 +190,53 @@ namespace PyboardFileManager.Properties {
                 this["HelpWidth"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("160")]
+        public int LibraryLeft {
+            get {
+                return ((int)(this["LibraryLeft"]));
+            }
+            set {
+                this["LibraryLeft"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("160")]
+        public int LibraryTop {
+            get {
+                return ((int)(this["LibraryTop"]));
+            }
+            set {
+                this["LibraryTop"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("600")]
+        public int LibraryWidth {
+            get {
+                return ((int)(this["LibraryWidth"]));
+            }
+            set {
+                this["LibraryWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("500")]
+        public int LibraryHeight {
+            get {
+                return ((int)(this["LibraryHeight"]));
+            }
+            set {
+                this["LibraryHeight"] = value;
+            }
+        }
     }
 }

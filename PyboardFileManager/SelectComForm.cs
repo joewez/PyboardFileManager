@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO.Ports;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace PyboardFileManager
@@ -13,19 +15,16 @@ namespace PyboardFileManager
             InitializeComponent();
         }
 
-        private void SelectCom_Load(object sender, EventArgs e)
-        {
-            //cboPorts.Items.Clear();
-            //string[] ports = SerialPort.GetPortNames().OrderBy(s => Convert.ToInt32(s.Substring(3))).ToArray();
-            //foreach (string port in ports)
-            //    cboPorts.Items.Add(port);
-        }
-
         private void btnOK_Click(object sender, EventArgs e)
         {
             SELECTED_COMM_PORT = cboPorts.Text;
             DTR_ENABLED = chkDTREnabled.Checked;
             this.Close();
+        }
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            RefreshCommPortList();
         }
 
         private void btnQuit_Click(object sender, EventArgs e)
@@ -44,5 +43,14 @@ namespace PyboardFileManager
                 Height = 161;
             }
         }
+
+        private void RefreshCommPortList()
+        {
+            cboPorts.Items.Clear();
+            string[] ports = SerialPort.GetPortNames().OrderBy(s => Convert.ToInt32(s.Substring(3))).ToArray();
+            foreach (string port in ports)
+                cboPorts.Items.Add(port);
+        }
+
     }
 }

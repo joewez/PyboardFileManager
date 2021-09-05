@@ -93,13 +93,16 @@ namespace PyboardFileManager
             toolTip1.SetToolTip(btnRun, "Run the currently selected file");
             toolTip1.SetToolTip(btnSave, "Save the current file");
             toolTip1.SetToolTip(btnSaveAs, "Save the current file to the current directory with the specified name");
+            toolTip1.SetToolTip(btnFind, "Simple search for current file");
             toolTip1.SetToolTip(btnReplaceAll, "Simple search-and-replace for current file");
-            toolTip1.SetToolTip(cboHelp, "Local Help Documents");
+            toolTip1.SetToolTip(cboHelp, "Local Help Documents and Hyperlinks");
             toolTip1.SetToolTip(btnEditUndo, "Undo last edit");
             toolTip1.SetToolTip(btnEditRedo, "Redo last edit");
             toolTip1.SetToolTip(btnEditCut, "Cut currently selected text to the clipboard");
             toolTip1.SetToolTip(btnEditCopy, "Copy currently selected text to the clipboard");
+            toolTip1.SetToolTip(btnEditDelete, "Delete selected text");
             toolTip1.SetToolTip(btnEditPaste, "Paste clipboard contents");
+            toolTip1.SetToolTip(btnView, "View file in separate window");
 
             // these are the file that can be opened and edited
             _EditableExtensions = ConfigurationManager.AppSettings["EditableExtensions"];
@@ -338,7 +341,7 @@ namespace PyboardFileManager
                 bool saved = DoSave(oldFilename);
                 if (saved)
                 {
-                    lblCurrentFile.Text = GetFileOnly(_CurrentFile);
+                    lblCurrentFile.Text = _CurrentFile;
                     _FileDirty = false;
                     lblCurrentFile.ForeColor = Color.Black;
                     scintilla1.EmptyUndoBuffer();
@@ -488,6 +491,34 @@ namespace PyboardFileManager
             if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.Copy;
         }
 
+        private void lblCurrentFile_Click(object sender, EventArgs e)
+        {
+            if (this.WindowState != FormWindowState.Maximized)
+                this.WindowState = FormWindowState.Maximized;
+            else
+                this.WindowState = FormWindowState.Normal;
+        }
+
+        private void btnView_Click(object sender, EventArgs e)
+        {
+            string selectedItem = lstDirectory.Text;
+            if (selectedItem != "")
+            {
+                if ((selectedItem != LBracket + ".." + RBracket) && (selectedItem.Substring(0, 1) != LBracket))
+                {
+                    _CurrentFile = (_CurrentPath == "") ? selectedItem : _CurrentPath + "/" + selectedItem;
+                    string LocalFile = Path.Combine(_SessionPath, selectedItem);
+                    if (EditableFile(LocalFile))
+                    {
+                        Viewer viewer = new Viewer(LocalFile, _PYB);
+                        viewer.Show();
+                    }
+                    else
+                        MessageBox.Show("Not listed as an editable file type.  See the .config file to add more extensions.");
+                }
+            }
+
+        }
 
         #endregion
 
@@ -608,7 +639,7 @@ namespace PyboardFileManager
                             }
                             _FileDirty = false;
                             scintilla1.EmptyUndoBuffer();
-                            lblCurrentFile.Text = GetFileOnly(_CurrentFile);
+                            lblCurrentFile.Text = _CurrentFile;
                             lblCurrentFile.ForeColor = Color.Black;
 
                             if (LocalFile.ToLower().Trim().EndsWith(".html") || LocalFile.ToLower().Trim().EndsWith(".xml"))
