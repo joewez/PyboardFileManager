@@ -54,6 +54,7 @@ All the features are pretty self-explanatory, but here is just a short descripti
   - To go back one directory click on the [..] entry at the top of the file list
     
 - Main Commands
+  - <b>Refresh</b> will re-read the file list of the current directory
   - <b>New</b> will prepare a new file for editing
   - <b>Open</b> will open a file for editing or change the directory
   - <b>Load</b> will allow you to import a file from your computer
@@ -61,8 +62,8 @@ All the features are pretty self-explanatory, but here is just a short descripti
   - <b>Delete</b> will delete the file or directory from the device
   - <b>Move</b> will move (rename) the selected file
   - <b>MKDIR</b> will allow you to create a sub-folder
-  - <b>Refresh</b> will re-read the file list of the current directory
   - <b>Run</b> will attempt to import/run the selected file
+  - <b>View</b> will open the selected file for viewing
   - <b>REPL</b> will open a MicroPython REPL window
   
 - Editing Commands

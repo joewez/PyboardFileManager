@@ -506,15 +506,38 @@ namespace PyboardFileManager
             {
                 if ((selectedItem != LBracket + ".." + RBracket) && (selectedItem.Substring(0, 1) != LBracket))
                 {
-                    _CurrentFile = (_CurrentPath == "") ? selectedItem : _CurrentPath + "/" + selectedItem;
+                    string ViewFile = (_CurrentPath == "") ? selectedItem : _CurrentPath + "/" + selectedItem;
                     string LocalFile = Path.Combine(_SessionPath, selectedItem);
-                    if (EditableFile(LocalFile))
+
+                    Cursor.Current = Cursors.WaitCursor;
+                    _PYB.GetFile(ViewFile, LocalFile);
+                    Cursor.Current = Cursors.Default;
+
+                    if (File.Exists(LocalFile))
                     {
-                        Viewer viewer = new Viewer(LocalFile, _PYB);
-                        viewer.Show();
+                        if (EditableFile(LocalFile))
+                        {
+                            Viewer viewer = new Viewer(LocalFile);
+                            if (LocalFile.ToLower().Trim().EndsWith(".html") || LocalFile.ToLower().Trim().EndsWith(".xml"))
+                            {
+                                ConfigureForHTML((Scintilla)viewer.Controls["scintilla1"]);
+                            }
+                            else if (LocalFile.ToLower().Trim().EndsWith("py"))
+                            {
+                                ConfigureForPython((Scintilla)viewer.Controls["scintilla1"], _micropython_keywords, _micropython_modules);
+                            }
+                            else
+                            {
+                                ConfigureForText((Scintilla)viewer.Controls["scintilla1"]);
+                            }
+                            viewer.Show();
+                        }
+                        else
+                            MessageBox.Show("Not listed as an editable file type.  See the .config file to add more extensions.");
                     }
                     else
-                        MessageBox.Show("Not listed as an editable file type.  See the .config file to add more extensions.");
+                        MessageBox.Show("Unable to retrieve file.");
+
                 }
             }
 
