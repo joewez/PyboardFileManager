@@ -9,6 +9,8 @@ namespace PyboardFileManager
 {
     public partial class TerminalForm : Form
     {
+        private System.IO.Ports.SerialPort _SerialPort = null;
+
         private bool _command_has_run = false;
         private bool _dtrEnable = false;
         private int _baudRate = 115200;
@@ -27,6 +29,8 @@ namespace PyboardFileManager
                 _baudRate = BaudRate;
                 _command = Command;
                 _dtrEnable = DTREnable;
+
+                _SerialPort = serialPort1;
             }
             catch (Exception ex)
             {
@@ -57,14 +61,14 @@ namespace PyboardFileManager
         {
             try
             {
-                if (!serialPort1.IsOpen)
+                if (!_SerialPort.IsOpen)
                 {
-                    serialPort1.PortName = _comPort;
-                    serialPort1.BaudRate = _baudRate;
-                    serialPort1.DtrEnable = _dtrEnable;
-                    serialPort1.ReadTimeout = 100;
-                    serialPort1.WriteTimeout = 100;
-                    serialPort1.Open();
+                    _SerialPort.PortName = _comPort;
+                    _SerialPort.BaudRate = _baudRate;
+                    _SerialPort.DtrEnable = _dtrEnable;
+                    _SerialPort.ReadTimeout = 100;
+                    _SerialPort.WriteTimeout = 100;
+                    _SerialPort.Open();
                     SendCtrlC();
                 }
                 if (!_command_has_run)
@@ -84,10 +88,10 @@ namespace PyboardFileManager
 
                 if (!String.IsNullOrEmpty(_command))
                 {
-                    if (serialPort1.IsOpen)
+                    if (_SerialPort.IsOpen)
                     {
-                        serialPort1.Write(_command);
-                        serialPort1.Write("\r");
+                        _SerialPort.Write(_command);
+                        _SerialPort.Write("\r");
                     }
                 }
 
@@ -99,11 +103,11 @@ namespace PyboardFileManager
             }
         }
 
-        private void serialPort1_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
+        private void SerialPort1_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
         {
             try
             {
-                _readBuffer = serialPort1.ReadExisting();
+                _readBuffer = _SerialPort.ReadExisting();
                 this.Invoke(new EventHandler(DoUpdate));
             }
             catch (Exception ex)
@@ -134,20 +138,20 @@ namespace PyboardFileManager
                 if (e.KeyCode == Keys.Up)
                 {
                     byte[] b = { 27, 91, 65 };
-                    serialPort1.Write(b, 0, 3);
+                    _SerialPort.Write(b, 0, 3);
                     e.Handled = true;
                     e.SuppressKeyPress = true;
                 }
                 else if (e.KeyCode == Keys.Down)
                 {
                     byte[] b = { 27, 91, 66 };
-                    serialPort1.Write(b, 0, 3);
+                    _SerialPort.Write(b, 0, 3);
                     e.Handled = true;
                     e.SuppressKeyPress = true;
                 }
                 else if (e.KeyCode == Keys.Tab)
                 {
-                    serialPort1.Write("\t");
+                    _SerialPort.Write("\t");
                     e.Handled = true;
                     e.SuppressKeyPress = true;
                 }
@@ -156,7 +160,7 @@ namespace PyboardFileManager
                     string pastedText = Clipboard.GetText();
                     if (pastedText != "")
                     {
-                        serialPort1.Write(pastedText);
+                        _SerialPort.Write(pastedText);
                     }
                     e.Handled = true;
                     e.SuppressKeyPress = true;
@@ -166,7 +170,7 @@ namespace PyboardFileManager
                     string pastedText = Clipboard.GetText();
                     if (pastedText != "")
                     {
-                        serialPort1.Write(pastedText);
+                        _SerialPort.Write(pastedText);
                     }
                     e.Handled = true;
                     e.SuppressKeyPress = true;
@@ -198,11 +202,11 @@ namespace PyboardFileManager
         {
             try
             {
-                if (serialPort1.IsOpen)
+                if (_SerialPort.IsOpen)
                 {
                     char[] key = new char[1];
                     key[0] = (char)3;
-                    serialPort1.Write(key, 0, 1);
+                    _SerialPort.Write(key, 0, 1);
                 }
             }
             catch (Exception ex)
@@ -215,11 +219,11 @@ namespace PyboardFileManager
         {
             try
             {
-                if (serialPort1.IsOpen)
+                if (_SerialPort.IsOpen)
                 {
                     char[] key = new char[1];
                     key[0] = (char)5;
-                    serialPort1.Write(key, 0, 1);
+                    _SerialPort.Write(key, 0, 1);
                 }
             }
             catch (Exception ex)
@@ -235,7 +239,7 @@ namespace PyboardFileManager
             {
                 char[] key = new char[1];
                 key[0] = e.KeyChar;
-                serialPort1.Write(key, 0, 1);
+                _SerialPort.Write(key, 0, 1);
                 e.Handled = true;
             }
             catch (Exception ex)
@@ -249,7 +253,7 @@ namespace PyboardFileManager
             try
             {
                 SendCtrlC();
-                serialPort1.Close();
+                _SerialPort.Close();
                 SaveWindowValue();
             }
             catch (Exception ex)
@@ -365,10 +369,11 @@ namespace PyboardFileManager
 
         private void Log(string msg)
         {
-            txtDisplay.AppendText(msg);
-            txtDisplay.SelectionStart = txtDisplay.TextLength;
-            txtDisplay.SelectionLength = 0;
-            txtDisplay.ScrollToCaret();
+            Debug.WriteLine(msg);
+            //txtDisplay.AppendText(msg);
+            //txtDisplay.SelectionStart = txtDisplay.TextLength;
+            //txtDisplay.SelectionLength = 0;
+            //txtDisplay.ScrollToCaret();
         }
 
         private void GetWindowValue()
@@ -387,6 +392,5 @@ namespace PyboardFileManager
             Settings.Default.REPLTop = Top;
             Settings.Default.Save();
         }
-
     }
 }

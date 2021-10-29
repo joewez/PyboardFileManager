@@ -43,9 +43,9 @@
             this.mainSplitter = new System.Windows.Forms.SplitContainer();
             this.panel1 = new System.Windows.Forms.Panel();
             this.lstDirectory = new System.Windows.Forms.ListBox();
-            this.panel5 = new System.Windows.Forms.Panel();
+            this.pnlPath = new System.Windows.Forms.Panel();
             this.lblPath = new System.Windows.Forms.Label();
-            this.panel4 = new System.Windows.Forms.Panel();
+            this.pnlPathSummary = new System.Windows.Forms.Panel();
             this.lblFileCount = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.lblFolderCount = new System.Windows.Forms.Label();
@@ -81,8 +81,8 @@
             this.mainSplitter.Panel2.SuspendLayout();
             this.mainSplitter.SuspendLayout();
             this.panel1.SuspendLayout();
-            this.panel5.SuspendLayout();
-            this.panel4.SuspendLayout();
+            this.pnlPath.SuspendLayout();
+            this.pnlPathSummary.SuspendLayout();
             this.pnlCommands.SuspendLayout();
             this.pnlSaveMessage.SuspendLayout();
             this.pnlFileStatus.SuspendLayout();
@@ -92,64 +92,69 @@
             // 
             // btnREPL
             // 
+            this.btnREPL.BackColor = System.Drawing.SystemColors.Control;
             this.btnREPL.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnREPL.ForeColor = System.Drawing.Color.Black;
             this.btnREPL.Image = ((System.Drawing.Image)(resources.GetObject("btnREPL.Image")));
             this.btnREPL.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnREPL.Location = new System.Drawing.Point(3, 388);
+            this.btnREPL.Location = new System.Drawing.Point(3, 396);
             this.btnREPL.Name = "btnREPL";
             this.btnREPL.Padding = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.btnREPL.Size = new System.Drawing.Size(73, 31);
             this.btnREPL.TabIndex = 10;
             this.btnREPL.Text = "REPL";
             this.btnREPL.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnREPL.UseVisualStyleBackColor = true;
+            this.btnREPL.UseVisualStyleBackColor = false;
             this.btnREPL.Click += new System.EventHandler(this.btnREPL_Click);
             // 
             // btnExport
             // 
+            this.btnExport.BackColor = System.Drawing.SystemColors.Control;
             this.btnExport.Image = ((System.Drawing.Image)(resources.GetObject("btnExport.Image")));
             this.btnExport.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnExport.Location = new System.Drawing.Point(3, 176);
+            this.btnExport.Location = new System.Drawing.Point(3, 214);
             this.btnExport.Name = "btnExport";
             this.btnExport.Padding = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.btnExport.Size = new System.Drawing.Size(73, 30);
-            this.btnExport.TabIndex = 4;
+            this.btnExport.TabIndex = 5;
             this.btnExport.Text = "Export";
             this.btnExport.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnExport.UseVisualStyleBackColor = true;
+            this.btnExport.UseVisualStyleBackColor = false;
             this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
             // 
             // btnMove
             // 
+            this.btnMove.BackColor = System.Drawing.SystemColors.Control;
             this.btnMove.Image = ((System.Drawing.Image)(resources.GetObject("btnMove.Image")));
             this.btnMove.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnMove.Location = new System.Drawing.Point(3, 244);
+            this.btnMove.Location = new System.Drawing.Point(3, 282);
             this.btnMove.Name = "btnMove";
             this.btnMove.Padding = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.btnMove.Size = new System.Drawing.Size(73, 30);
-            this.btnMove.TabIndex = 6;
+            this.btnMove.TabIndex = 7;
             this.btnMove.Text = "Move";
             this.btnMove.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnMove.UseVisualStyleBackColor = true;
+            this.btnMove.UseVisualStyleBackColor = false;
             this.btnMove.Click += new System.EventHandler(this.btnMove_Click);
             // 
             // btnRun
             // 
+            this.btnRun.BackColor = System.Drawing.SystemColors.Control;
             this.btnRun.Image = ((System.Drawing.Image)(resources.GetObject("btnRun.Image")));
             this.btnRun.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnRun.Location = new System.Drawing.Point(3, 312);
+            this.btnRun.Location = new System.Drawing.Point(3, 350);
             this.btnRun.Name = "btnRun";
             this.btnRun.Padding = new System.Windows.Forms.Padding(8, 0, 6, 0);
             this.btnRun.Size = new System.Drawing.Size(73, 30);
-            this.btnRun.TabIndex = 8;
+            this.btnRun.TabIndex = 9;
             this.btnRun.Text = "Run";
             this.btnRun.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnRun.UseVisualStyleBackColor = true;
+            this.btnRun.UseVisualStyleBackColor = false;
             this.btnRun.Click += new System.EventHandler(this.btnRun_Click);
             // 
             // btnRefresh
             // 
+            this.btnRefresh.BackColor = System.Drawing.SystemColors.Control;
             this.btnRefresh.Image = ((System.Drawing.Image)(resources.GetObject("btnRefresh.Image")));
             this.btnRefresh.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnRefresh.Location = new System.Drawing.Point(3, 34);
@@ -159,77 +164,83 @@
             this.btnRefresh.TabIndex = 0;
             this.btnRefresh.Text = "Refresh";
             this.btnRefresh.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnRefresh.UseVisualStyleBackColor = true;
+            this.btnRefresh.UseVisualStyleBackColor = false;
             this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
             // btnMkdir
             // 
+            this.btnMkdir.BackColor = System.Drawing.SystemColors.Control;
+            this.btnMkdir.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnMkdir.Image = ((System.Drawing.Image)(resources.GetObject("btnMkdir.Image")));
             this.btnMkdir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnMkdir.Location = new System.Drawing.Point(3, 278);
+            this.btnMkdir.Location = new System.Drawing.Point(3, 67);
             this.btnMkdir.Name = "btnMkdir";
             this.btnMkdir.Padding = new System.Windows.Forms.Padding(8, 0, 2, 0);
             this.btnMkdir.Size = new System.Drawing.Size(73, 30);
-            this.btnMkdir.TabIndex = 7;
+            this.btnMkdir.TabIndex = 1;
             this.btnMkdir.Text = "MkDir";
             this.btnMkdir.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnMkdir.UseVisualStyleBackColor = true;
+            this.btnMkdir.UseVisualStyleBackColor = false;
             this.btnMkdir.Click += new System.EventHandler(this.btnMkdir_Click);
             // 
             // btnLoad
             // 
+            this.btnLoad.BackColor = System.Drawing.SystemColors.Control;
             this.btnLoad.Image = ((System.Drawing.Image)(resources.GetObject("btnLoad.Image")));
             this.btnLoad.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnLoad.Location = new System.Drawing.Point(3, 142);
+            this.btnLoad.Location = new System.Drawing.Point(3, 180);
             this.btnLoad.Name = "btnLoad";
             this.btnLoad.Padding = new System.Windows.Forms.Padding(4, 0, 3, 0);
             this.btnLoad.Size = new System.Drawing.Size(73, 30);
-            this.btnLoad.TabIndex = 3;
+            this.btnLoad.TabIndex = 4;
             this.btnLoad.Text = "Load";
             this.btnLoad.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnLoad.UseVisualStyleBackColor = true;
+            this.btnLoad.UseVisualStyleBackColor = false;
             this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
             // 
             // btnNew
             // 
+            this.btnNew.BackColor = System.Drawing.SystemColors.Control;
             this.btnNew.Image = ((System.Drawing.Image)(resources.GetObject("btnNew.Image")));
             this.btnNew.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnNew.Location = new System.Drawing.Point(3, 74);
+            this.btnNew.Location = new System.Drawing.Point(3, 112);
             this.btnNew.Name = "btnNew";
             this.btnNew.Padding = new System.Windows.Forms.Padding(6, 0, 2, 0);
             this.btnNew.Size = new System.Drawing.Size(73, 30);
-            this.btnNew.TabIndex = 1;
+            this.btnNew.TabIndex = 2;
             this.btnNew.Text = "New";
             this.btnNew.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnNew.UseVisualStyleBackColor = true;
+            this.btnNew.UseVisualStyleBackColor = false;
             this.btnNew.Click += new System.EventHandler(this.btnNew_Click);
             // 
             // btnDelete
             // 
+            this.btnDelete.BackColor = System.Drawing.SystemColors.Control;
             this.btnDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnDelete.Image")));
             this.btnDelete.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnDelete.Location = new System.Drawing.Point(3, 210);
+            this.btnDelete.Location = new System.Drawing.Point(3, 248);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Padding = new System.Windows.Forms.Padding(4, 0, 2, 0);
             this.btnDelete.Size = new System.Drawing.Size(73, 30);
-            this.btnDelete.TabIndex = 5;
+            this.btnDelete.TabIndex = 6;
             this.btnDelete.Text = "Delete";
             this.btnDelete.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.UseVisualStyleBackColor = false;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // btnOpen
             // 
+            this.btnOpen.BackColor = System.Drawing.SystemColors.Control;
             this.btnOpen.Image = ((System.Drawing.Image)(resources.GetObject("btnOpen.Image")));
             this.btnOpen.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnOpen.Location = new System.Drawing.Point(3, 108);
+            this.btnOpen.Location = new System.Drawing.Point(3, 146);
             this.btnOpen.Name = "btnOpen";
             this.btnOpen.Padding = new System.Windows.Forms.Padding(6, 0, 4, 0);
             this.btnOpen.Size = new System.Drawing.Size(73, 30);
-            this.btnOpen.TabIndex = 2;
+            this.btnOpen.TabIndex = 3;
             this.btnOpen.Text = "Open";
             this.btnOpen.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnOpen.UseVisualStyleBackColor = true;
+            this.btnOpen.UseVisualStyleBackColor = false;
             this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
             // 
             // mainSplitter
@@ -258,8 +269,8 @@
             // panel1
             // 
             this.panel1.Controls.Add(this.lstDirectory);
-            this.panel1.Controls.Add(this.panel5);
-            this.panel1.Controls.Add(this.panel4);
+            this.panel1.Controls.Add(this.pnlPath);
+            this.panel1.Controls.Add(this.pnlPathSummary);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(79, 3);
             this.panel1.Name = "panel1";
@@ -268,9 +279,10 @@
             // 
             // lstDirectory
             // 
-            this.lstDirectory.BackColor = System.Drawing.Color.Cornsilk;
+            this.lstDirectory.BackColor = System.Drawing.Color.Moccasin;
             this.lstDirectory.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lstDirectory.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lstDirectory.ForeColor = System.Drawing.Color.Black;
             this.lstDirectory.FormattingEnabled = true;
             this.lstDirectory.IntegralHeight = false;
             this.lstDirectory.ItemHeight = 21;
@@ -280,16 +292,17 @@
             this.lstDirectory.TabIndex = 18;
             this.lstDirectory.DoubleClick += new System.EventHandler(this.lstDirectory_DoubleClick);
             // 
-            // panel5
+            // pnlPath
             // 
-            this.panel5.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel5.Controls.Add(this.lblPath);
-            this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel5.Location = new System.Drawing.Point(0, 0);
-            this.panel5.Margin = new System.Windows.Forms.Padding(6, 3, 3, 3);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(265, 31);
-            this.panel5.TabIndex = 15;
+            this.pnlPath.BackColor = System.Drawing.SystemColors.Control;
+            this.pnlPath.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pnlPath.Controls.Add(this.lblPath);
+            this.pnlPath.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlPath.Location = new System.Drawing.Point(0, 0);
+            this.pnlPath.Margin = new System.Windows.Forms.Padding(6, 3, 3, 3);
+            this.pnlPath.Name = "pnlPath";
+            this.pnlPath.Size = new System.Drawing.Size(265, 31);
+            this.pnlPath.TabIndex = 15;
             // 
             // lblPath
             // 
@@ -301,18 +314,18 @@
             this.lblPath.Text = "/";
             this.lblPath.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
-            // panel4
+            // pnlPathSummary
             // 
-            this.panel4.BackColor = System.Drawing.SystemColors.Control;
-            this.panel4.Controls.Add(this.lblFileCount);
-            this.panel4.Controls.Add(this.label7);
-            this.panel4.Controls.Add(this.lblFolderCount);
-            this.panel4.Controls.Add(this.label9);
-            this.panel4.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel4.Location = new System.Drawing.Point(0, 594);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(265, 40);
-            this.panel4.TabIndex = 17;
+            this.pnlPathSummary.BackColor = System.Drawing.SystemColors.Control;
+            this.pnlPathSummary.Controls.Add(this.lblFileCount);
+            this.pnlPathSummary.Controls.Add(this.label7);
+            this.pnlPathSummary.Controls.Add(this.lblFolderCount);
+            this.pnlPathSummary.Controls.Add(this.label9);
+            this.pnlPathSummary.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pnlPathSummary.Location = new System.Drawing.Point(0, 594);
+            this.pnlPathSummary.Name = "pnlPathSummary";
+            this.pnlPathSummary.Size = new System.Drawing.Size(265, 40);
+            this.pnlPathSummary.TabIndex = 17;
             // 
             // lblFileCount
             // 
@@ -354,6 +367,7 @@
             // 
             // pnlCommands
             // 
+            this.pnlCommands.BackColor = System.Drawing.SystemColors.Control;
             this.pnlCommands.Controls.Add(this.btnView);
             this.pnlCommands.Controls.Add(this.btnREPL);
             this.pnlCommands.Controls.Add(this.label11);
@@ -374,16 +388,17 @@
             // 
             // btnView
             // 
+            this.btnView.BackColor = System.Drawing.SystemColors.Control;
             this.btnView.Image = ((System.Drawing.Image)(resources.GetObject("btnView.Image")));
             this.btnView.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnView.Location = new System.Drawing.Point(3, 347);
+            this.btnView.Location = new System.Drawing.Point(3, 316);
             this.btnView.Name = "btnView";
             this.btnView.Padding = new System.Windows.Forms.Padding(8, 0, 6, 0);
             this.btnView.Size = new System.Drawing.Size(73, 30);
-            this.btnView.TabIndex = 9;
+            this.btnView.TabIndex = 8;
             this.btnView.Text = "View";
             this.btnView.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnView.UseVisualStyleBackColor = true;
+            this.btnView.UseVisualStyleBackColor = false;
             this.btnView.Click += new System.EventHandler(this.btnView_Click);
             // 
             // label11
@@ -397,6 +412,7 @@
             // 
             // pnlSaveMessage
             // 
+            this.pnlSaveMessage.BackColor = System.Drawing.SystemColors.Control;
             this.pnlSaveMessage.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pnlSaveMessage.Controls.Add(this.label5);
             this.pnlSaveMessage.Location = new System.Drawing.Point(220, 295);
@@ -417,14 +433,20 @@
             // 
             // scintilla1
             // 
+            this.scintilla1.AutoCMaxHeight = 9;
+            this.scintilla1.BiDirectionality = ScintillaNET.BiDirectionalDisplayType.Disabled;
             this.scintilla1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.scintilla1.EolMode = ScintillaNET.Eol.Lf;
             this.scintilla1.IndentationGuides = ScintillaNET.IndentView.Real;
             this.scintilla1.Lexer = ScintillaNET.Lexer.Python;
             this.scintilla1.Location = new System.Drawing.Point(3, 34);
             this.scintilla1.Name = "scintilla1";
+            this.scintilla1.ScrollWidth = 1;
             this.scintilla1.Size = new System.Drawing.Size(692, 563);
+            this.scintilla1.TabIndents = true;
             this.scintilla1.TabIndex = 12;
+            this.scintilla1.UseRightToLeftReadingLayout = false;
+            this.scintilla1.WrapMode = ScintillaNET.WrapMode.None;
             this.scintilla1.TextChanged += new System.EventHandler(this.scintilla1_TextChanged);
             // 
             // pnlFileStatus
@@ -635,9 +657,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.mainSplitter)).EndInit();
             this.mainSplitter.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
-            this.panel5.ResumeLayout(false);
-            this.panel4.ResumeLayout(false);
-            this.panel4.PerformLayout();
+            this.pnlPath.ResumeLayout(false);
+            this.pnlPathSummary.ResumeLayout(false);
+            this.pnlPathSummary.PerformLayout();
             this.pnlCommands.ResumeLayout(false);
             this.pnlSaveMessage.ResumeLayout(false);
             this.pnlSaveMessage.PerformLayout();
@@ -683,12 +705,12 @@
         private System.Windows.Forms.Button btnEditUndo;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox cboHelp;
-        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.Panel pnlPathSummary;
         private System.Windows.Forms.Label lblFileCount;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label lblFolderCount;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Panel panel5;
+        private System.Windows.Forms.Panel pnlPath;
         private System.Windows.Forms.Label lblPath;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.ListBox lstDirectory;

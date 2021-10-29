@@ -133,6 +133,31 @@ namespace PyboardFileManager
             ResetNew();
 
             RestoreWindow();
+
+            if (ConfigurationManager.AppSettings["DarkMode"].Trim().ToUpper().StartsWith("Y"))
+            {
+                pnlCommands.BackColor = SystemColors.ControlDark;
+                pnlPath.BackColor = SystemColors.ControlDark;
+                pnlPathSummary.BackColor = SystemColors.ControlDark;
+                lblCurrentFile.BackColor = SystemColors.ControlDark;
+                pnlFileStatus.BackColor = SystemColors.ControlDark;
+                pnlEditToolbar.BackColor = SystemColors.ControlDark;
+                pnlSaveMessage.BackColor = SystemColors.ControlDark;
+                lstDirectory.ForeColor = Color.White;
+                lstDirectory.BackColor = Color.SlateGray;
+            }
+            else
+            {
+                pnlCommands.BackColor = SystemColors.Control;
+                pnlPath.BackColor = SystemColors.Control;
+                pnlPathSummary.BackColor = SystemColors.Control;
+                lblCurrentFile.BackColor = SystemColors.Control;
+                pnlFileStatus.BackColor = SystemColors.Control;
+                pnlEditToolbar.BackColor = SystemColors.Control;
+                pnlSaveMessage.BackColor = SystemColors.Control;
+                lstDirectory.ForeColor = Color.Black;
+                lstDirectory.BackColor = Color.Moccasin;
+            }
         }
 
         private void btnNew_Click(object sender, EventArgs e)
@@ -863,6 +888,7 @@ namespace PyboardFileManager
             //}
             else
             {
+                scintilla1.Focus();
                 TerminalForm terminal = new TerminalForm(_PYB.COMM_PORT, _PYB.BAUD_RATE, cmd, _PYB.DTR_ENABLED);
                 terminal.ShowDialog();
             }
