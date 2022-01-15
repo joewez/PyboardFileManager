@@ -142,7 +142,6 @@ namespace PyboardFileManager
                 lblCurrentFile.BackColor = SystemColors.ControlDark;
                 pnlFileStatus.BackColor = SystemColors.ControlDark;
                 pnlEditToolbar.BackColor = SystemColors.ControlDark;
-                pnlSaveMessage.BackColor = SystemColors.ControlDark;
                 lstDirectory.ForeColor = Color.White;
                 lstDirectory.BackColor = Color.SlateGray;
             }
@@ -154,7 +153,6 @@ namespace PyboardFileManager
                 lblCurrentFile.BackColor = SystemColors.Control;
                 pnlFileStatus.BackColor = SystemColors.Control;
                 pnlEditToolbar.BackColor = SystemColors.Control;
-                pnlSaveMessage.BackColor = SystemColors.Control;
                 lstDirectory.ForeColor = Color.Black;
                 lstDirectory.BackColor = Color.Moccasin;
             }
@@ -366,9 +364,9 @@ namespace PyboardFileManager
                 bool saved = DoSave(oldFilename);
                 if (saved)
                 {
-                    lblCurrentFile.Text = _CurrentFile;
+                    lblCurrentFile.Text = FilenameOnly(_CurrentFile);
                     _FileDirty = false;
-                    lblCurrentFile.ForeColor = Color.Black;
+                    lblCurrentFile.ForeColor = Color.Blue;
                     scintilla1.EmptyUndoBuffer();
                     RefreshFileList();
                 }
@@ -402,7 +400,7 @@ namespace PyboardFileManager
 
         private void tmrMessage_Tick(object sender, EventArgs e)
         {
-            pnlSaveMessage.Visible = false;
+            lblStatus.Visible = false;
             tmrMessage.Enabled = false;
         }
 
@@ -610,7 +608,7 @@ namespace PyboardFileManager
             {
                 _FileDirty = false;
                 scintilla1.EmptyUndoBuffer();
-                lblCurrentFile.ForeColor = Color.Black;
+                lblCurrentFile.ForeColor = Color.Blue;
                 if (doRefresh)
                     RefreshFileList();
             }
@@ -687,8 +685,8 @@ namespace PyboardFileManager
                             }
                             _FileDirty = false;
                             scintilla1.EmptyUndoBuffer();
-                            lblCurrentFile.Text = _CurrentFile;
-                            lblCurrentFile.ForeColor = Color.Black;
+                            lblCurrentFile.Text = FilenameOnly(_CurrentFile);
+                            lblCurrentFile.ForeColor = Color.Blue;
 
                             if (LocalFile.ToLower().Trim().EndsWith(".html") || LocalFile.ToLower().Trim().EndsWith(".xml"))
                             {
@@ -821,9 +819,7 @@ namespace PyboardFileManager
 
                 result = true;
 
-                pnlSaveMessage.Top = (scintilla1.Height - pnlSaveMessage.Height) / 2;
-                pnlSaveMessage.Left = (scintilla1.Width - pnlSaveMessage.Width) / 2;
-                pnlSaveMessage.Visible = true;
+                lblStatus.Visible = true;
                 tmrMessage.Enabled = true;
             }
             catch (Exception ex)
@@ -840,11 +836,23 @@ namespace PyboardFileManager
             
             _CurrentFile = NEW_FILENAME;
             _FileDirty = false;
-            lblCurrentFile.Text = _CurrentFile;
-            lblCurrentFile.ForeColor = Color.Black;
+            lblCurrentFile.Text = FilenameOnly(_CurrentFile);
+            lblCurrentFile.ForeColor = Color.Blue;
 
             ConfigureForPython(scintilla1, _micropython_keywords, _micropython_modules);
         }
+
+        private string FilenameOnly(string filespec)
+        {
+            string result = filespec;
+
+            int LastSlash = filespec.LastIndexOf(@"/");
+            if (LastSlash > 0)
+                result = filespec.Substring(LastSlash + 1);
+
+            return result;
+        }
+
 
         private void OpenREPL(string cmd)
         {

@@ -43,6 +43,7 @@ namespace PyboardFileManager
 
         private void btnQuit_Click(object sender, EventArgs e)
         {
+            tmrRotatePicture.Enabled = false;
             this.Close();
         }
 

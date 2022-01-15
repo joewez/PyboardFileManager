@@ -30,7 +30,7 @@
       <Value Profile="(Default)">600</Value>
     </Setting>
     <Setting Name="WindowWidth" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">1000</Value>
+      <Value Profile="(Default)">1200</Value>
     </Setting>
     <Setting Name="REPLHeight" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">500</Value>
