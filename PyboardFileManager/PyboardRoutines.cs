@@ -47,6 +47,7 @@ namespace PyboardFileManager
                 COMM_PORT = "COM" + COMM_PORT;
 
             DTR_ENABLED = Utils.DecodeBoolean("DTREnable");
+            
 
             if (!String.IsNullOrEmpty(COMM_PORT))
             {
@@ -105,6 +106,7 @@ namespace PyboardFileManager
                 ((ComboBox)s.Controls["cboPorts"]).Items.Add(port);
             if (((ComboBox)s.Controls["cboPorts"]).Items.Count == 1)
                 ((ComboBox)s.Controls["cboPorts"]).SelectedIndex = 0;
+            ((CheckBox)s.Controls["chkDTREnabled"]).Checked = DTR_ENABLED;
             s.ShowDialog();
             COMM_PORT = s.SELECTED_COMM_PORT;
             DTR_ENABLED = s.DTR_ENABLED;
