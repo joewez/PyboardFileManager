@@ -172,6 +172,7 @@ namespace PyboardFileManager
 
         private void btnLoad_Click(object sender, EventArgs e)
         {
+            scintilla1.Focus();
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 string newFile = openFileDialog1.FileName;
@@ -186,6 +187,8 @@ namespace PyboardFileManager
 
         private void btnExport_Click(object sender, EventArgs e)
         {
+            scintilla1.Focus();
+
             string FileToExport = "";
             string selectedItem = lstDirectory.Text;
             if (selectedItem != "")
@@ -246,6 +249,8 @@ namespace PyboardFileManager
 
         private void btnMove_Click(object sender, EventArgs e)
         {
+            scintilla1.Focus();
+
             string FileToMove = "";
             string selectedItem = lstDirectory.Text;
             if (selectedItem != "")
@@ -260,7 +265,7 @@ namespace PyboardFileManager
 
             if (FileToMove != "")
             {
-                string filename = Microsoft.VisualBasic.Interaction.InputBox("New Path and Filename:", "Move File", FileToMove);
+                string filename = GetUserInput("Move File", "New Path and Filename:", FileToMove);
                 if (filename != "")
                 {
                     if (filename.IndexOf(".") > 0)
@@ -278,7 +283,9 @@ namespace PyboardFileManager
 
         private void btnMkdir_Click(object sender, EventArgs e)
         {
-            string newdir = Microsoft.VisualBasic.Interaction.InputBox("New directory under " + lblPath.Text + ":", "Create Directory", "");
+            scintilla1.Focus();
+
+            string newdir = GetUserInput("Create Directory", "New directory under " + lblPath.Text + ":", "");
             if (newdir != "")
             {
                 if (!newdir.Contains("."))
@@ -301,6 +308,7 @@ namespace PyboardFileManager
 
         private void btnRun_Click(object sender, EventArgs e)
         {
+            scintilla1.Focus();
             string selectedItem = lstDirectory.Text;
             if (selectedItem != "")
             {
@@ -344,6 +352,7 @@ namespace PyboardFileManager
 
         private void btnREPL_Click(object sender, EventArgs e)
         {
+            scintilla1.Focus();
             OpenREPL("");
         }
 
@@ -355,6 +364,7 @@ namespace PyboardFileManager
 
         private void btnSaveAs_Click(object sender, EventArgs e)
         {
+            scintilla1.Focus();
             if (_CurrentFile == NEW_FILENAME)
                 ButtonSave();
             else
@@ -570,6 +580,25 @@ namespace PyboardFileManager
 
         #region Helper Routines
 
+        private string GetUserInput(string title, string prompt, string inputString)
+        {
+            string userInput = "";
+
+            GetInputForm getInputForm = new GetInputForm();
+            getInputForm.Text = title;
+            ((Label)getInputForm.Controls["lblPrompt"]).Text = prompt;
+            ((TextBox)getInputForm.Controls["txtInputBox"]).Text = inputString;
+
+            DialogResult result = getInputForm.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                userInput = ((TextBox)getInputForm.Controls["txtInputBox"]).Text;
+            }
+            getInputForm.Dispose();
+
+            return userInput;
+        }
+
         private void RestoreWindow()
         {
             Width = Settings.Default.WindowWidth;
@@ -772,7 +801,7 @@ namespace PyboardFileManager
                 {
                     justfile = prefill.Substring(prefill.LastIndexOf('/') + 1);
                 }
-                string filename = Microsoft.VisualBasic.Interaction.InputBox("New Filename:", "Save File", justfile);
+                string filename = GetUserInput("Save File", "New Filename:", justfile);
                 if (filename != "")
                 {
                     if (filename.IndexOf(".") > 0)
