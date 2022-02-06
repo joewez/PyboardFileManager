@@ -91,6 +91,7 @@ namespace PyboardFileManager
             this.Name = "GetInputForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "GetInputForm";
+            this.Activated += new System.EventHandler(this.GetInputForm_Activated);
             this.ResumeLayout(false);
             this.PerformLayout();
 

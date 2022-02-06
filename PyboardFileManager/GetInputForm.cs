@@ -27,5 +27,11 @@ namespace PyboardFileManager
         {
             Close();
         }
+
+        private void GetInputForm_Activated(object sender, EventArgs e)
+        {
+            txtInputBox.Focus();
+            txtInputBox.SelectAll();
+        }
     }
 }
